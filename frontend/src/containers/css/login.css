@@ -1,0 +1,109 @@
+/* login.css */
+
+/* Container styling */
+.login-container {
+    max-width: 500px;
+    height: 480px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #e9e3e3;
+    border-radius: 20px;
+    background-color: #f9f9f9;
+    position: relative;
+    top: 30px;
+  }
+  
+  /* Title styling */
+  .login-title {
+    font-size: 24px;
+    margin-top: 40px;
+    margin-bottom: 30px;
+    text-align: center;
+  }
+  
+  /* Text styling */
+  .login-text {
+    font-size: 14px;
+    margin-bottom: 10px;
+    position: relative;
+    left: 280px;
+
+  }
+  
+  /* Form input styling */
+  .login-form-group {
+    margin-bottom: 15px;
+  }
+  
+  .login-form-control {
+    width: 60%;
+    height: 50px; 
+  
+    position: relative;
+    left: 100px; 
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+  }
+  
+  /* Button styling */
+  .login-btn {
+    
+    padding: 10px;
+    width: 60%;
+    height: 50px; 
+    position: relative;
+    left: 100px; 
+    margin-top: 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    background-color: #007bff;
+    color: #fff;
+    cursor: pointer;
+  }
+  
+  /* Google button styling */
+  .login-google-btn {
+    width: 60%;
+    height: 50px;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid rgb(255, 255, 255);
+    position: relative;
+    left: 100px;
+    top: 20px;
+    border-radius: 5px;
+    background-color: #ffffff;
+    color: #000000;
+    cursor: pointer;
+  }
+  .sign-google{
+    position: relative;
+    bottom: 10px;
+   
+    left: 5px;
+  }
+  .login-recovery{
+    position: relative;
+    left: 250px; 
+    margin-top: 20px;
+    font-size: 14px;
+
+
+  }
+  /* Link styling */
+  .login-container a {
+    color: #007bff;
+    text-decoration: none;
+  }
+  
+  /* Link hover effect */
+  .login-container a:hover {
+    text-decoration: underline;
+  }
+  
+
+  
