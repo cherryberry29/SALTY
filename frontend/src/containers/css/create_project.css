@@ -16,20 +16,22 @@
     background-color: #fefefe;
     margin: 15% auto;
     padding: 20px;
-    border: 1px solid #888;
+    border: 1px solid #ccc;
+    border-radius: 8px;
     width: 50%;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 .close {
     color: #aaa;
     float: right;
-    font-size: 28px;
+    font-size: 24px;
     font-weight: bold;
 }
 
 .close:hover,
 .close:focus {
-    color: black;
+    color: #555;
     text-decoration: none;
     cursor: pointer;
 }
@@ -41,18 +43,20 @@
 
 .project-form label {
     margin-bottom: 10px;
+    font-size: 16px;
 }
 
 .project-form input[type="text"] {
-    padding: 8px;
+    padding: 10px;
     margin-bottom: 15px;
     border: 1px solid #ccc;
     border-radius: 4px;
     outline: none;
+    font-size: 16px;
 }
 
 .project-form button {
-    padding: 10px 20px;
+    padding: 12px 24px;
     margin-top: 10px;
     border: none;
     background-color: #007bff;
@@ -60,23 +64,35 @@
     cursor: pointer;
     border-radius: 4px;
     outline: none;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
 }
 
 .project-form button:hover {
     background-color: #0056b3;
 }
-/* create_project.css */
+
+.create-project {
+    height: 100px;
+}
 
 .create-project-button {
-    padding: 10px 20px;
-    background-color: #007bff;
+    padding: 12px 24px;
+    background-color: #a8406a;
     color: #fff;
     border: none;
     border-radius: 4px;
     cursor: pointer;
     outline: none;
+    position: relative;
+    left: calc(100% - 300px);
+    top: 30px;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
 }
 
 .create-project-button:hover {
-    background-color: #0056b3;
+    background-color: #aa6782;
 }
+
+/* create_project.css */

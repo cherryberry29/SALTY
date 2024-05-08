@@ -1,10 +1,10 @@
-// ProjectList.js
-
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { connect } from 'react-redux';
+import { clickProject } from '../actions/auth'; 
+import './css/project_list.css';
 
-const ProjectList = ({ user }) => {
+const ProjectList = ({ user, clickProject }) => {
     const [projects, setProjects] = useState([]);
 
     useEffect(() => {
@@ -22,10 +22,19 @@ const ProjectList = ({ user }) => {
         fetchProjects();
     }, [user]);
 
+    const handleProjectClick = (project) => {
+        // Call the clickProject action when a project is clicked
+        clickProject({
+            projectid: project.projectid,
+            projectname: project.projectname,
+            teamlead_email: project.teamlead_email
+        });
+    };
+
     return (
-        <div>
-            <h1>Project List</h1>
-            <table>
+        <div className="project-list-container">
+            <h2>Projects</h2>
+            <table className="project-list-table">
                 <thead>
                     <tr>
                         <th>Project ID</th>
@@ -35,9 +44,10 @@ const ProjectList = ({ user }) => {
                 </thead>
                 <tbody>
                     {projects.map(project => (
-                        <tr key={project.projectid}>
-                            <td>{project.projectid}</td>
+                        <tr key={project.projectid} onClick={() => handleProjectClick(project)}>
                             <td>{project.projectname}</td>
+                            <td>{project.projectid}</td>
+                            
                             <td>{project.teamlead_email}</td>
                         </tr>
                     ))}
@@ -51,4 +61,9 @@ const mapStateToProps = state => ({
     user: state.auth.user
 });
 
-export default connect(mapStateToProps)(ProjectList);
+// Connect the clickProject action to the component
+const mapDispatchToProps = {
+    clickProject
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ProjectList);

@@ -58,10 +58,10 @@ class Project(models.Model):
         projectid = models.CharField(primary_key=True, max_length=20)
         teamlead_email = models.EmailField( null=True)
 
-        def save(self, *args, **kwargs):
-            if not self.projectid:
-                self.projectid = generate_project_id(self.projectname)
-            super().save(*args, **kwargs)
+        # def save(self, *args, **kwargs):
+        #     if not self.projectid:
+        #         self.projectid = generate_project_id(self.projectname)
+        #     super().save(*args, **kwargs)
 
         def __str__(self):
             return f"{self.projectid} - {self.projectname}"
@@ -75,21 +75,22 @@ class Project_TeamMember(models.Model):
 
 
 
-def generate_project_id(project_name):
-    # Extracting the first four characters if the project name is a single word
-    if ' ' not in project_name:
-        code = project_name[:4].upper()
-    else:
-        # Extracting two characters from the first word and two from the second word if there's a space
-        words = re.split(r'\s+', project_name)
-        code = (words[0][:3] + words[-1][:3]).upper()
+# def generate_project_id(project_name):
+#     # Extracting the first four characters if the project name is a single word
+#     if ' ' not in project_name:
+#         code = project_name[:4].upper()
+#     else:
+#         # Extracting two characters from the first word and two from the second word if there's a space
+#         words = re.split(r'\s+', project_name)
+#         code = (words[0][:3] + words[-1][:3]).upper()
 
-    # Checking if the code consists of only letters
-    if not code.isalpha():
-        # If not, generating a new code with only letters
-        code = ''.join(random.choices(string.ascii_uppercase, k=4))
+#     # Checking if the code consists of only letters
+#     if not code.isalpha():
+#         # If not, generating a new code with only letters
+#         code = ''.join(random.choices(string.ascii_uppercase, k=4))
 
-    return code
+#     return code
+
 class Sprint(models.Model):
     sprint = models.CharField(primary_key=True, max_length=20, default=None)
     start_date = models.DateField()

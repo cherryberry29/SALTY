@@ -21,6 +21,8 @@ import {
     LOGOUT,
     ISSUE_ADDED_Fail,
     ISSUE_ADDED_SUCCESS,
+    PROJECT_CLICK_SUCCESS,
+    PROJECT_CLICK_FAIL
  
     
 } from './types';
@@ -51,6 +53,13 @@ export const addIssue = (issue) => async (dispatch) => {
     } catch (error) {
         console.log(error)
         dispatch({ type: ISSUE_ADDED_Fail, payload: error.message });
+// actions.js
+    }}
+export const clickProject = (projectData) => (dispatch) => {
+    try {
+        dispatch({ type: PROJECT_CLICK_SUCCESS, payload: projectData });
+    } catch (error) {
+        dispatch({ type: PROJECT_CLICK_FAIL, payload: error.message });
     }
 };
 

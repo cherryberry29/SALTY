@@ -38,9 +38,11 @@ def create_project(request):
         data = json.loads(request.body)
         project_name = data.get('projectname')
         teamlead = data.get('teamlead')
+        projectid = data.get('projectid')
+
 
         if project_name:
-            project = Project(projectname=project_name, teamlead_email=teamlead)
+            project = Project(projectid=projectid,projectname=project_name, teamlead_email=teamlead)
             project.save()
             
             # Create a dictionary with all parameters
@@ -119,12 +121,6 @@ def process_invitation_token(request):
     
         team_member = Project_TeamMember.objects.create(team_member_email=email,project=project_ins)
         
-            
-        if Project_TeamMember.objects.filter(team_member_email=email).exists():
-            return JsonResponse({'error': 'Email is already associated with this project'}, status=400)
-        if project_ins.teamlead_email == email:
-            return JsonResponse({'error': 'Email is the team lead of this project'}, status=400)    
-        team_member = Project_TeamMember.objects.create(team_member_email=email,project=project_ins) 
         team_member.save()
 
         return JsonResponse({'message': 'Invitation processed successfully'})

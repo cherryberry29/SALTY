@@ -4,7 +4,7 @@ import CreateIssueForm from './CreateIssueForm';
 import './css/sprint.css'
 import IssueStatus from './issueStatus';
 import IssueType from './issuseType';
-import Backlog from './backlog';
+import Backlog from './Backlog';
 // import assignee from "/assignee.png";
 
 const Sprint = () => {

@@ -19,7 +19,9 @@ import {
     PROJECT_CREATE_FAIL,
     LOGOUT,
     ISSUE_ADDED_Fail,
-    ISSUE_ADDED_SUCCESS
+    ISSUE_ADDED_SUCCESS,
+    PROJECT_CLICK_SUCCESS,
+    PROJECT_CLICK_FAIL
    
 } from '../actions/types';
 
@@ -121,12 +123,15 @@ export default function(state = initialState, action) {
                         ...state
                     }
             case  PROJECT_CREATE_SUCCESS:
+            case  PROJECT_CLICK_SUCCESS:
             return {
                 ...state,
                 project: action.payload,
                 error: null
             };
         case  PROJECT_CREATE_FAIL:
+        case  PROJECT_CLICK_FAIL:
+
             return {
                 ...state,
                 error: action.payload
