@@ -8,6 +8,7 @@ from django.urls import path, include, re_path
 urlpatterns = [
   
     path('create/', create_project, name='create_project'),
+    path('add/', add_issue, name='add_issue'),
     path('generate_invitation_token/',  generate_invitation_token, name='generate_invitation_token'),
     path('verify_invitation_token/',verify_invitation_token, name='verify_invitation_token'),
     path('process_invitation_token/',process_invitation_token, name='process_invitation_token'),

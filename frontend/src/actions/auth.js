@@ -19,6 +19,8 @@ import {
     PROJECT_CREATE_SUCCESS,
     PROJECT_CREATE_FAIL,
     LOGOUT,
+    ISSUE_ADDED_Fail,
+    ISSUE_ADDED_SUCCESS,
     PROJECT_CLICK_SUCCESS,
     PROJECT_CLICK_FAIL
  
@@ -34,8 +36,23 @@ export const createProject = (projectData) => async (dispatch) => {
     }
 };
 
-// actions.js
 
+
+export const addIssue = (issue) => async (dispatch) => {
+    console.log(issue)
+    try {
+        
+        const response = await axios.post('http://localhost:8000/djapp/add/', issue)
+
+        
+        dispatch({ type: ISSUE_ADDED_SUCCESS, payload: response.data });
+    } catch (error) {
+        console.log(error)
+        dispatch({ type: ISSUE_ADDED_Fail, payload: error.message });
+// actions.js
+    }}
+
+    
 export const clickProject = (projectData) => (dispatch) => {
     try {
         dispatch({ type: PROJECT_CLICK_SUCCESS, payload: projectData });

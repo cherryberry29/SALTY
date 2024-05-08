@@ -2,7 +2,7 @@ import React from 'react'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Home from './containers/Home';
 import Login from './containers/Login';
-import Backlog from './containers/Backlog';
+import Backlog from './containers/Sprint';
 import Project from './containers/Project';
 import ProjectPage from './containers/ProjectPage';
 import Filters from './containers/Filters';
@@ -14,6 +14,8 @@ import Accept_invitation from './containers/Accept_invitation';
 import Layout from './hocs/Layout';
 import { Provider } from 'react-redux';
 import store from './store';
+import Sprint from './containers/Sprint';
+import IssueStatus from './containers/issueStatus';
 
 
 const App = () => {
@@ -32,12 +34,13 @@ const App = () => {
             <Route path="/project" element={<Project />} />
             <Route path="/project/:projectid" element={<ProjectPage />} />
             <Route path="/accept-invitation" element={<Accept_invitation />} />
-            <Route path="/project/:projectid/backlog" element={<Backlog/>} />
+            <Route path="/project/:projectid/backlog" element={<Sprint/>} />
             <Route path="/project/:projectid/filters" element={<Filters/>} />
             </Routes>
             </Layout>
         </Router>
         </Provider>
+        
     </div>
   )
 }

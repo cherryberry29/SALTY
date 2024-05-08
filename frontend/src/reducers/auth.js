@@ -18,6 +18,8 @@ import {
     PROJECT_CREATE_SUCCESS,
     PROJECT_CREATE_FAIL,
     LOGOUT,
+    ISSUE_ADDED_Fail,
+    ISSUE_ADDED_SUCCESS,
     PROJECT_CLICK_SUCCESS,
     PROJECT_CLICK_FAIL
    
@@ -41,6 +43,12 @@ export default function(state = initialState, action) {
                 ...state,
                 isAuthenticated: false
             }
+        case ISSUE_ADDED_SUCCESS:
+                return {
+                    ...state,
+                    issue: action.payload
+                    
+                }
        
         case AUTHENTICATED_SUCCESS:
             return {
@@ -128,6 +136,11 @@ export default function(state = initialState, action) {
                 ...state,
                 error: action.payload
             };
+        case  ISSUE_ADDED_Fail:
+                return {
+                    ...state,
+                    error: action.payload
+                };
 
         default:
             return state

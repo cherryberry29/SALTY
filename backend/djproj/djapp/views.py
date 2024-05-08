@@ -8,6 +8,27 @@ from itsdangerous import BadSignature, SignatureExpired, URLSafeTimedSerializer
 from django.core.mail import send_mail
 
 import json
+@csrf_exempt 
+def add_issue(request):
+  
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        issue_name = data.get('issueName')  
+        print("heereee "+issue_name)
+        if issue_name:
+            try:
+                print("hhhhhh")
+                new_issue = issue(IssueName=issue_name)
+                new_issue.save()  
+                print(new_issue)
+                print("after")
+                return JsonResponse({'success': True, 'message': 'Issue added successfully', 'issue_id': new_issue.issue_id})
+            except Exception as e:
+                return JsonResponse({'success': False, 'message': str(e)})
+        else:
+            return JsonResponse({'success': False, 'message': 'Issue name is required'})
+    else:
+        return JsonResponse({'success': False, 'message': 'Invalid request method'})
 
 @csrf_exempt 
 def create_project(request):
@@ -137,3 +158,25 @@ def project_list(request):
             return JsonResponse({'error': 'Email parameter is missing'}, status=400)
     else:
         return JsonResponse({'error': 'Only GET requests are allowed'}, status=405)
+
+@csrf_exempt
+def get_team_members(request):
+    if request.method == 'GET':
+        # Get projectId from query parameters
+        project_id = request.GET.get('projectid')
+
+        if project_id:
+            # Fetch all team members for the specified project from the database
+            team_members_emails = Project_TeamMember.objects.filter(project__projectid=project_id).values_list('team_member_email', flat=True)
+            
+            # Fetch user details for team members
+            team_members = UserAccount.objects.filter(email__in=team_members_emails).values('email', 'first_name', 'last_name')
+
+            # Convert queryset to list of dictionaries
+            team_members_list = list(team_members)
+
+            return JsonResponse({'team_members': team_members_list})
+        else:
+            return JsonResponse({'error': 'Project ID is required'}, status=400)
+    else:
+        return JsonResponse({'error': 'Method not allowed'}, status=405)
