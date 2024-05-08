@@ -1,0 +1,13 @@
+/* Hide scrollbar for the scrollable div */
+div {
+    overflow: hidden; /* Hide the scrollbar */
+  }
+  
+  /* Then, style the scrollbar track and thumb to make it invisible */
+  div::-webkit-scrollbar {
+    width: 0.4rem; /* Width of the scrollbar track */
+  }
+  
+  div::-webkit-scrollbar-thumb {
+    background: transparent; /* Make the scrollbar thumb transparent */
+  }

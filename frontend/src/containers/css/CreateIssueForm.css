@@ -1,0 +1,58 @@
+.create-issue-form {
+  margin: 20px auto;
+  width: 80%;
+  max-width: 600px;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+}
+
+.create-issue-form label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.create-issue-form textarea,
+.create-issue-form select,
+.create-issue-form input[type="datetime-local"],
+.create-issue-form input[type="file"] {
+  width: calc(100% - 10px);
+  padding: 5px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+
+.create-issue-form select,
+.create-issue-form input[type="file"] {
+  appearance: none;
+  -webkit-appearance: none;
+  background-color: #fff;
+  background-image: url('data:image/svg+xml;utf8,<svg fill="#000000" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24px" height="24px"><path d="M7 10l5 5 5-5H7z"/><path d="M0 0h24v24H0z" fill="none"/></svg>');
+  background-repeat: no-repeat;
+  background-position: right 5px top 50%;
+  padding-right: 30px;
+}
+
+.create-issue-form button {
+  padding: 8px 15px;
+  margin-right: 10px;
+  border: none;
+  border-radius: 3px;
+  background-color: #007bff;
+  color: #fff;
+  cursor: pointer;
+}
+
+.create-issue-form button:hover {
+  background-color: #0056b3;
+}
+
+.create-issue-form button[type="button"] {
+  background-color: #6c757d;
+}
+
+.create-issue-form button[type="button"]:hover {
+  background-color: #5a6268;
+}
