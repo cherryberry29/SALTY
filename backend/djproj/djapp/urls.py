@@ -12,5 +12,6 @@ urlpatterns = [
     path('get_sprints/', get_sprints, name="get_sprints"),
     # path('project_dropdown_data/', project_dropdown_data, name="project_dropdown_data" ),
     path('csrf_token/', csrf_token, name='csrf_token'),   
+    path('create_issue/', create_issue, name='create_issue'),
 ]
 

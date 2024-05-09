@@ -52,10 +52,27 @@ const CreateIssueForm = ({ onClose, user }) => {
     fetchTeamMembersAndSprints();
   }, [selectedProject]);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Your submission logic here
+    try {
+      await axios.post('http://localhost:8000/djapp/create_issue/', {
+        IssueType :issueType,
+        IssueName : issueType,
+        Sprint: sprint,
+        Status: status,
+        Assignee:assignee,
+        Assigned_by: assignedby,
+        Description:summary,
+        Assigned_epic: null,
+        ProjectId : selectedProject,
+
+      });
+      onClose();
+    } catch (error) {
+      console.error('Error creating issue:', error);
+    }
   };
+
 
   const handleAttachmentChange = (e) => {
     setAttachment(e.target.files[0]);

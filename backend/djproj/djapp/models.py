@@ -105,16 +105,16 @@ class Epic(models.Model):
     end_date = models.DateField()
     guide=models.CharField(max_length=30)
 
-    
 
 class issue(models.Model):
-    IssueName = models.CharField(max_length=30)
+    IssueName = models.CharField(max_length=30, default='')  # Default value is an empty string
     issue_id = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
-    # sprint = models.ForeignKey(Sprint, on_delete=models.SET_NULL, null=True, blank=True)
-    # projectId = models.ForeignKey(Project, on_delete=models.SET_NULL, null=True, blank=True)
-    # is_addedTosprint=models.BooleanField(max_length=5)
-    # status=models.CharField(max_length=30,default="TODO")
-    # assignee=models.CharField(max_length=30,default=None)
-    # assigned_by=models.CharField(max_length=30,default=None)
-    # description=models.TextField(max_length=30,default=None)
-    # assigned_epic=models.ForeignKey(Epic, on_delete=models.SET_NULL, null=True, blank=True,default=None)
+    IssueType = models.CharField(max_length=15, default='')
+    sprint = models.ForeignKey(Sprint, on_delete=models.SET_NULL, null=True, blank=True)
+    projectId = models.ForeignKey(Project, on_delete=models.SET_NULL, null=True, blank=True)
+    status = models.CharField(max_length=30, default="TODO")  # Default value is "TODO"
+    assignee = models.CharField(max_length=30, default="")  # Default value is an empty string
+    assigned_by = models.CharField(max_length=30, default="")  # Default value is an empty string
+    description = models.TextField(max_length=30, default="")  # Default value is an empty string
+    assigned_epic = models.ForeignKey(Epic, on_delete=models.SET_NULL, null=True, blank=True, default=None)  # Default value is None
+

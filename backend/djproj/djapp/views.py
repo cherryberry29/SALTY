@@ -198,4 +198,25 @@ def get_sprints(request):
     else:
         return JsonResponse({'error': 'Method not allowed'}, status=405)
 
+@csrf_exempt
+def create_issue(request):
+    print("i got the issue")
+    if request.method == 'POST':
+        print("im inside post")
+        data = json.loads(request.body)
+        new_issue = issue.objects.create(
+            IssueName=data.get('IssueName'),
+            IssueType = data.get('IssueType'),
+            sprint_id=data.get('Sprint',''),
+            projectId_id=data.get('selectedProject'),
+            status=data.get('Status', 'TODO'),
+            assignee=data.get('Assignee',''),
+            assigned_by=data.get('Assigned_by', None),
+            description=data.get('Description', None),
+            assigned_epic_id=data.get('Assigned_epic', None)
+        )
+        return JsonResponse({'message': 'Issue created successfully'})
+    else:
+        return JsonResponse({'error': 'Only POST method allowed'}, status=405)
+
 
