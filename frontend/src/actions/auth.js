@@ -42,10 +42,6 @@ export const addIssue = (issue) => async (dispatch) => {
     console.log(issue)
     try {
         
-
-      
-
-        
         const response = await axios.post('http://localhost:8000/djapp/add/', issue)
 
         
@@ -55,6 +51,8 @@ export const addIssue = (issue) => async (dispatch) => {
         dispatch({ type: ISSUE_ADDED_Fail, payload: error.message });
 // actions.js
     }}
+
+    
 export const clickProject = (projectData) => (dispatch) => {
     try {
         dispatch({ type: PROJECT_CLICK_SUCCESS, payload: projectData });

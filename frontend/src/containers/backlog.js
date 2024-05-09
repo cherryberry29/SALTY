@@ -1,16 +1,24 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect} from 'react';
 import './css/sprint.css';
 import IssueType from './issuseType';
 import { connect } from 'react-redux'; // Import connect from react-redux
 import { addIssue } from '../actions/auth';
 import IssueStatus from './issueStatus';
+import { clickProject } from '../actions/auth'; 
+import { useParams } from 'react-router-dom';
 
-const Backlog = ({ addIssue }) =>  {
+
+
+const Backlog = ({ addIssue}) =>  {
   const [inputValues, setInputValues] = useState([]);
   const [showDropdown, setShowDropdown] = useState(false);
   const [InputField, setInputField] = useState(false);
   const [buttonShow, setButtonShow] = useState(true);
   const [draggedEle, setDragged] = useState([]);
+
+
+  const { projectid } = useParams();
+console.log(projectid)
 
   const showInputField = () => {
     setInputField(!showDropdown);
@@ -35,6 +43,7 @@ const Backlog = ({ addIssue }) =>  {
 
   return (
     <>
+    {/* <h1>{project_id}</h1> */}
       <div className={inputValues.length ? 'solid-box' : 'dotted-box'}>
         {inputValues.map((value, index) => (
           <div key={index} className="input-item" >
@@ -61,7 +70,7 @@ const Backlog = ({ addIssue }) =>  {
 
 const mapStateToProps = (state) => ({
  
-  
+  // project_id:state.auth.project.projectid
 });
 
 export default connect(mapStateToProps, { addIssue })(Backlog); // Connect the component to the Redux store and add the addIssue action

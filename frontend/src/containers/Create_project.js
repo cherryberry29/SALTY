@@ -48,7 +48,7 @@ const Project = ({ isAuthenticated, user, createProject, project }) => {
 
     useEffect(() => {
         if (project && project.projectid) {
-            navigate(`/project/${project.projectid}`);
+            navigate(`/project/${project.projectid}/backlog`);
         }
     }, [project, navigate]);
 

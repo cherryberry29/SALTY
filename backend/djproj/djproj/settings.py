@@ -201,11 +201,11 @@ DJOSER = {
 }
 
 SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '133561047587-ac0g3216t6nhkfssjcvnpbeek8otm1gv.apps.googleusercontent.com'
-SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = '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'
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = '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'                         
 SOCIAL_AUTH_GOOGLE_OAUTH2_SCOPE = ['https://www.googleapis.com/auth/userinfo.email', 'https://www.googleapis.com/auth/userinfo.profile', 'openid']
 SOCIAL_AUTH_GOOGLE_OAUTH2_EXTRA_DATA = ['first_name', 'last_name']
 # Default primary key field type
-# https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
+# https://docs.djangoproject.com/enmv/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL='djapp.UserAccount'
