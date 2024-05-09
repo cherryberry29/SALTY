@@ -7,6 +7,7 @@ import IssueStatus from './issueStatus';
 import { clickProject } from '../actions/auth'; 
 import { useParams } from 'react-router-dom';
 
+import Add_team_members from './Add_team_members';
 
 
 const Backlog = ({ addIssue}) =>  {
@@ -17,8 +18,9 @@ const Backlog = ({ addIssue}) =>  {
   const [draggedEle, setDragged] = useState([]);
 
 
-  const { projectid } = useParams();
-console.log(projectid)
+
+
+
 
   const showInputField = () => {
     setInputField(!showDropdown);
@@ -42,8 +44,9 @@ console.log(projectid)
 };
 
   return (
+    
     <>
-    {/* <h1>{project_id}</h1> */}
+     
       <div className={inputValues.length ? 'solid-box' : 'dotted-box'}>
         {inputValues.map((value, index) => (
           <div key={index} className="input-item" >

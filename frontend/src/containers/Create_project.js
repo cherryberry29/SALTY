@@ -30,10 +30,10 @@ const Project = ({ isAuthenticated, user, createProject, project }) => {
     const handleProjectNameChange = (e) => {
         const newName = e.target.value;
         setProjectName(newName);
-        const newProjectId = generateProjectId(newName);
+        const newProjectId = newName.trim() ? generateProjectId(newName) : ''; 
         setProjectId(newProjectId);
     };
-
+    
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
@@ -63,22 +63,28 @@ const Project = ({ isAuthenticated, user, createProject, project }) => {
                     <div className="modal-content">
                         <span className="close" onClick={() => setShowForm(false)}>&times;</span>
                         <form onSubmit={handleSubmit} className="project-form">
-                            <h3 htmlFor="projectName">Create a Scrum project</h3>
+                            <h3 className="projectName">Create a Scrum project</h3>
+                            <div className='project-form-inputs'>
+                                <label>Enter Project name</label>
                             <input
                                 type="text"
                                 id="projectName"
                                 value={projectName}
+                                
                                 onChange={handleProjectNameChange}
                                 required
                             />
+                            <label>Project key </label>
                             <input
                                 type="text"
                                 id="projectId"
                                 value={projectId}
+                              
                                 readOnly
                                 disabled
                             />
                             <button type="submit">Create Project</button>
+                            </div>
                         </form>
                     </div>
                 </div>

@@ -37,9 +37,9 @@ const ProjectList = ({ user, clickProject }) => {
             <table className="project-list-table">
                 <thead>
                     <tr>
-                        <th>Project ID</th>
-                        <th>Project Name</th>
-                        <th>Team Lead Email</th>
+                        <th>Project key</th>
+                        <th>Project name</th>
+                        <th>Team lead </th>
                     </tr>
                 </thead>
                 <tbody>

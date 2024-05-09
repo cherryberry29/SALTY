@@ -1,15 +1,15 @@
-import React, { Fragment, useState,useEffect  } from 'react';
-import { Link, Navigate } from "react-router-dom"
+import React, { Fragment, useState, useEffect, useRef } from 'react';
+import { Link, Navigate } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { logout } from '../actions/auth';
-import "./css/navbar.css";
+import './css/navbar.css';
 import axios from 'axios';
 
-const Navbar = ({ logout, isAuthenticated,user }) => {
+const Navbar = ({ logout, isAuthenticated, user }) => {
     const [redirect, setRedirect] = useState(false);
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-
     const [projects, setProjects] = useState([]);
+    const dropdownRef = useRef(null);
 
     useEffect(() => {
         const fetchProjects = async () => {
@@ -26,11 +26,25 @@ const Navbar = ({ logout, isAuthenticated,user }) => {
         fetchProjects();
     }, [user]);
 
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+                setIsDropdownOpen(false);
+            }
+        };
+
+        document.addEventListener("mousedown", handleClickOutside);
+
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, []);
+
     const toggleDropdown = () => {
         setIsDropdownOpen(!isDropdownOpen);
     };
 
-    const logout_user = () => {
+    const logoutUser = () => {
         logout();
         setRedirect(true);
     };
@@ -38,10 +52,14 @@ const Navbar = ({ logout, isAuthenticated,user }) => {
     const guestLinks = () => (
         <Fragment>
             <li className='nav-item'>
-                <Link className='nav-link' to='/login'>Login</Link>
+                <Link className='nav-link' to='/login'>
+                    Login
+                </Link>
             </li>
             <li className='nav-item'>
-                <Link className='nav-link' to='/signup'>Sign Up</Link>
+                <Link className='nav-link' to='/signup'>
+                    Sign Up
+                </Link>
             </li>
         </Fragment>
     );
@@ -49,38 +67,55 @@ const Navbar = ({ logout, isAuthenticated,user }) => {
     const authLinks = () => (
         <Fragment>
             <li className='nav-item'>
-                <a className='nav-link' href='#!' onClick={logout_user}>Logout</a>
+                <a className='nav-link' href='#!' onClick={logoutUser}>
+                    Logout
+                </a>
             </li>
         </Fragment>
     );
 
     return (
         <Fragment>
-            <nav className="nav-container">
-                <ul className="nav-list">
-                    <li className="nav-item">Salty</li>
-                    <li className="nav-item"><button className="nav-button">Your Work</button></li>
-                    <li className={`nav-item dropdown ${isDropdownOpen ? 'open' : ''}`}>
-                        <button className="nav-button dropbtn" onClick={toggleDropdown}>Projects</button>
-                        {projects.map(project => (
-                        <div className="dropdown-content">
-                            <Link to="/projects/project1">{project.projectname}</Link>
-                        </div>
-                        ))}
+            <nav className='nav-container'>
+                <ul className='nav-list'>
+                    <li className='nav-item'>
+                        <button className='nav-button'>Salty</button>
                     </li>
-                    <li className="nav-item"><button className="nav-button">Filters</button></li>
-                    <li className="nav-item"><button className="nav-button">Teams</button></li>
+                    <li className='nav-item'>
+                        <button className='nav-button'>Your Work</button>
+                    </li>
+                    <li className='nav-item'>
+                        <button className='nav-button' onClick={toggleDropdown}>Project</button>
+                        {isDropdownOpen && (
+                            <ul className='dropdown' ref={dropdownRef}>
+                                {projects.map(project => (
+                                    <li key={project.id}>
+                                        <Link to={`/project/${project.projectid}/backlog`} className='dropdown-item'>{project.projectname}</Link>
+                                    </li>
+                                ))}
+                            </ul>
+                        )}
+                    </li>
+                 
+                 
+
+                    <li className='nav-item'>
+                        <button className='nav-button'>Filters</button>
+                    </li>
+                    <li className='nav-item'>
+                        <button className='nav-button'>Teams</button>
+                    </li>
                     {isAuthenticated ? authLinks() : guestLinks()}
                 </ul>
-                {redirect ? <Navigate to="/" /> : null}
+                {redirect ? <Navigate to='/' /> : null}
             </nav>
         </Fragment>
     );
-}
+};
 
 const mapStateToProps = state => ({
     isAuthenticated: state.auth.isAuthenticated,
-    user:state.auth.user
+    user: state.auth.user
 });
 
 export default connect(mapStateToProps, { logout })(Navbar);

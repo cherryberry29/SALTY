@@ -5,6 +5,9 @@ import './css/sprint.css'
 import IssueStatus from './issueStatus';
 import IssueType from './issuseType';
 import Backlog from './Backlog';
+import Add_team_members from './Add_team_members';
+import { useParams } from 'react-router-dom';
+
 // import assignee from "/assignee.png";
 
 const Sprint = () => {
@@ -12,6 +15,9 @@ const Sprint = () => {
   const searchParams = new URLSearchParams(location.search);
   const projectId = searchParams.get('projectid');
   console.log(projectId);
+
+  const { projectid } = useParams();
+  console.log(projectid,"my projectid")
 
   // State to manage form visibility
   const [formOpen, setFormOpen] = useState(false);
@@ -53,6 +59,8 @@ const Sprint = () => {
     <>
     <div>
       <h1>Backlog Page</h1>
+      
+      <Add_team_members projectid={projectid} />
       <button onClick={openForm}>Create</button>
       {formOpen && <CreateIssueForm projectId={projectId} onClose={closeForm} />}
     </div>

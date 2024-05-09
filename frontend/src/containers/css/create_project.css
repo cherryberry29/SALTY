@@ -18,7 +18,7 @@
     padding: 20px;
     border: 1px solid #ccc;
     border-radius: 8px;
-    width: 50%;
+    width: 30%;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
@@ -35,10 +35,19 @@
     text-decoration: none;
     cursor: pointer;
 }
+.projectName {
+    text-align: center;
+}
+
+.project-form-inputs{
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
 
 .project-form {
     display: flex;
     flex-direction: column;
+    
 }
 
 .project-form label {
@@ -56,20 +65,22 @@
 }
 
 .project-form button {
-    padding: 12px 24px;
+    padding: 12px 12px;
     margin-top: 10px;
+    margin-left: 100px;
     border: none;
-    background-color: #007bff;
+    background-color:  #a8406a;;
     color: #fff;
     cursor: pointer;
     border-radius: 4px;
     outline: none;
     font-size: 16px;
     transition: background-color 0.3s ease;
+
 }
 
 .project-form button:hover {
-    background-color: #0056b3;
+    background-color:#aa6782;
 }
 
 .create-project {
