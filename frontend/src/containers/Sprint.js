@@ -1,6 +1,6 @@
 import React, { useState , useEffect} from 'react';
 import { useLocation, useParams } from 'react-router-dom';
-import CreateIssueForm from './CreateIssueForm';
+
 import './css/sprint.css'
 import { connect } from 'react-redux'; 
 import IssueStatus from './issueStatus';
@@ -23,7 +23,7 @@ const Sprint = ({token}) => {
       try {
         const response = await axios.get("http://localhost:8000/djapp/issues/", 
         {
-          params: { projectId: projectid }
+          params: { projectId: projectid}
       },
         );
         console.log(response)
