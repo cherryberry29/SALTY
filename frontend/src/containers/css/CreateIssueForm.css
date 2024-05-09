@@ -56,3 +56,47 @@
 .create-issue-form button[type="button"]:hover {
   background-color: #5a6268;
 }
+
+
+/* Modal container */
+.modal {
+  display: flex;
+  align-items: center; /* Center vertically */
+  justify-content: center; /* Center horizontally */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+  z-index: 1;
+}
+
+/* Modal content */
+.modal-content {
+  background-color: #fefefe;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  max-width: 90%; /* Set maximum width */
+  max-height: 90%; /* Set maximum height */
+  overflow-y: auto; /* Enable vertical scrolling if content exceeds height */
+}
+
+/* Close button */
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+
+

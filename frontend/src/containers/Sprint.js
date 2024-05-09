@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import CreateIssueForm from './CreateIssueForm';
+
 import './css/sprint.css'
 import IssueStatus from './issueStatus';
 import IssueType from './issuseType';
-import Backlog from './Backlog';
+// import Backlog from './Backlog';
 import Add_team_members from './Add_team_members';
 import { useParams } from 'react-router-dom';
 
+import IssueForm from './IssueForm';
 // import assignee from "/assignee.png";
 
 const Sprint = () => {
@@ -62,7 +63,14 @@ const Sprint = () => {
       
       <Add_team_members projectid={projectid} />
       <button onClick={openForm}>Create</button>
-      {formOpen && <CreateIssueForm projectId={projectId} onClose={closeForm} />}
+      {formOpen && (
+          <div className="modal">
+            <div className="modal-content">
+              <span className="close" onClick={closeForm}>&times;</span>
+              <IssueForm onClose={closeForm} />
+            </div>
+          </div>
+        )}
     </div>
     <div className="mainBox">
       
@@ -91,40 +99,9 @@ const Sprint = () => {
           
         </div>
      
-
-      {/* Second div with dotted box */}
-      {/* <div className={inputValues.length ? 'solid-box' : 'dotted-box'}>
-  {inputValues.map((value, index) => (
-    <div key={index} className="input-item">
-      
-      
-     
-      
-      <div>{value}</div>
-      <div className='right'>
-      <IssueStatus /> </div>
-      <img src="/assignee.png"alt="assignee" id="userIcon"/>
-   
-    </div>
-  ))}
-</div> */}
-
-      {/* Third div with create issue button */}
-      {/* <div className="create-issue">
-      {buttonShow && (
-              <button onClick={showInputField}>Create Issue</button>
-            )}
-        
-        {InputField && (
-              <div className='issueCreation'>
-                 <IssueType />
-                <input type="text" placeholder="type your issue here"   onKeyDown={handleKeyPress} />
-              </div>
-            )}
-      </div> */}
-      <Backlog />
+      {/* <Backlog /> */}
       </div>
-    <Backlog />
+    {/* <Backlog /> */}
     </>
   );
 };

@@ -132,6 +132,7 @@ from .models import Project, Project_TeamMember
 
 def project_list(request):
     if request.method == 'GET':
+        print("in project list views.py")
         email = request.GET.get('email', None)
         if email:
             # Retrieve projects where the email matches the team lead
@@ -162,21 +163,39 @@ def project_list(request):
 @csrf_exempt
 def get_team_members(request):
     if request.method == 'GET':
-        # Get projectId from query parameters
         project_id = request.GET.get('projectid')
-
         if project_id:
-            # Fetch all team members for the specified project from the database
-            team_members_emails = Project_TeamMember.objects.filter(project__projectid=project_id).values_list('team_member_email', flat=True)
-            
-            # Fetch user details for team members
-            team_members = UserAccount.objects.filter(email__in=team_members_emails).values('email', 'first_name', 'last_name')
+            try:
+                # Fetch all team members for the specified project from the database
+                team_members_emails = Project_TeamMember.objects.filter(project__projectid=project_id).values_list('team_member_email', flat=True)
+                
+                # Fetch user details for team members
+                team_members = UserAccount.objects.filter(email__in=team_members_emails).values('email', 'first_name', 'last_name')
 
-            # Convert queryset to list of dictionaries
-            team_members_list = list(team_members)
+                # Convert queryset to list of dictionaries
+                team_members_list = list(team_members)
 
-            return JsonResponse({'team_members': team_members_list})
+                return JsonResponse({'team_members': team_members_list})
+            except Exception as e:
+                return JsonResponse({'error': f'An error occurred: {str(e)}'}, status=500)
         else:
             return JsonResponse({'error': 'Project ID is required'}, status=400)
     else:
         return JsonResponse({'error': 'Method not allowed'}, status=405)
+
+@csrf_exempt
+def get_sprints(request):
+    if request.method == 'GET':
+        project_id = request.GET.get('projectid')
+        # print("pid", project_id)
+        if project_id:
+            sprints = Sprint.objects.filter(project__projectid=project_id).values('sprint', 'start_date', 'end_date')
+            sprint_list = list(sprints)
+            # print(sprint_list)
+            return JsonResponse({'sprint_in_project': sprint_list})
+        else:
+            return JsonResponse({'error': 'Project ID is required'}, status=400)
+    else:
+        return JsonResponse({'error': 'Method not allowed'}, status=405)
+
+
