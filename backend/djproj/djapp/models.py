@@ -97,6 +97,7 @@ class Sprint(models.Model):
     end_date = models.DateField()
     sprint_goal=models.TextField(null=True,default="okay")
     project = models.ForeignKey(Project, on_delete=models.SET_NULL, null=True, blank=True)
+    
 class Epic(models.Model):
     EpicName = models.CharField( max_length=20, default=None)
     Epic_id = models.CharField(max_length=20, unique=True,primary_key=True)

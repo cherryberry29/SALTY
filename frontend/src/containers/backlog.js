@@ -1,19 +1,26 @@
-import React, { useState} from 'react';
+import React, { useState,useEffect} from 'react';
 import { useParams } from 'react-router-dom';
 import './css/sprint.css';
 import IssueType from './issuseType';
 import { connect } from 'react-redux'; // Import connect from react-redux
 import { addIssue } from '../actions/auth';
 import IssueStatus from './issueStatus';
-import { Link } from 'react-router-dom';
+import { clickProject } from '../actions/auth'; 
 
-const Backlog = ({ addIssue, }) =>  {
+
+
+
+const Backlog = ({ addIssue}) =>  {
   const [inputValues, setInputValues] = useState([]);
   const [showDropdown, setShowDropdown] = useState(false);
   const [InputField, setInputField] = useState(false);
   const [buttonShow, setButtonShow] = useState(true);
   const [draggedEle, setDragged] = useState([]);
   const {projectid}=useParams();
+
+
+  
+console.log(projectid)
 
   const showInputField = () => {
     setInputField(!showDropdown);
@@ -40,6 +47,7 @@ const Backlog = ({ addIssue, }) =>  {
   return (
     <>
     <h1>{projectid}</h1>
+    {/* <h1>{project_id}</h1> */}
       <div className={inputValues.length ? 'solid-box' : 'dotted-box'}>
         
         {inputValues.map((value, index) => (
@@ -61,14 +69,11 @@ const Backlog = ({ addIssue, }) =>  {
           </div>
         )}
       </div>
-      <Link to="/">href</Link>
+      
     </>
   );
 }
 
-const mapStateToProps = (state) => ({
-//  projectid:state.auth.project.projectid
-  
-});
 
-export default connect(mapStateToProps, { addIssue })(Backlog); // Connect the component to the Redux store and add the addIssue action
+
+export default connect( null,{ addIssue })(Backlog); // Connect the component to the Redux store and add the addIssue action

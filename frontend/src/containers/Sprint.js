@@ -7,6 +7,8 @@ import IssueStatus from './issueStatus';
 import IssueType from './issuseType';
 import Backlog from './Backlog';
 import axios from 'axios';
+import IssueForm from './IssueForm';
+// import assignee from "/assignee.png";
 
 
 
@@ -19,11 +21,11 @@ const Sprint = ({token}) => {
     const fetchIssues = async () => {
       
       try {
-        const response = await axios.get("http://localhost:8000/djapp/issues/", {
-          params: {
-            projectId: projectid 
-          },
-        });
+        const response = await axios.get("http://localhost:8000/djapp/issues/", 
+        {
+          params: { projectId: projectid }
+      },
+        );
         console.log(response)
         setissues(response.data);
         console.log(issues) 
@@ -65,7 +67,14 @@ const Sprint = ({token}) => {
     <div>
       <h1>Backlog Page</h1>
       <button onClick={openForm}>Create</button>
-      {formOpen && <CreateIssueForm projectId={projectid} onClose={closeForm} />}
+      {formOpen && (
+          <div className="modal">
+            <div className="modal-content">
+              <span className="close" onClick={closeForm}>&times;</span>
+              <IssueForm onClose={closeForm} />
+            </div>
+          </div>
+        )}
     </div>
     <div className="mainBox">
       
@@ -94,9 +103,7 @@ const Sprint = ({token}) => {
           
         </div>
      
-
-        {/* here i wanna pass filtered issue */}
-      <Backlog /> 
+      <Backlog />
       </div>
       {/* here i wanna pass all the  issue */}
     <Backlog />
