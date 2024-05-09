@@ -1,6 +1,7 @@
 
 from django.urls import path
 from .views import *
+from . import views
 
 from django.urls import path, include, re_path
 
@@ -13,6 +14,7 @@ urlpatterns = [
     path('verify_invitation_token/',verify_invitation_token, name='verify_invitation_token'),
     path('process_invitation_token/',process_invitation_token, name='process_invitation_token'),
     path('project_list/',project_list, name='project_list'),
+    path('issues/', ReactViews, name='project-issues'),
 
 
     path('csrf_token/', csrf_token, name='csrf_token'),

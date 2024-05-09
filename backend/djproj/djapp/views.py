@@ -2,25 +2,67 @@ from django.shortcuts import render
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from .models import *
+from rest_framework import status
+from rest_framework.response import Response
 from django.middleware.csrf import get_token
 from djproj.settings import EMAIL_HOST_USER
 from itsdangerous import BadSignature, SignatureExpired, URLSafeTimedSerializer
 from django.core.mail import send_mail
-
+from .serializers import *
+from rest_framework.views import APIView
+from rest_framework.decorators import api_view
+from rest_framework import generics
 import json
+from rest_framework_simplejwt.authentication import JWTAuthentication
+from rest_framework.permissions import IsAuthenticated
+
 @csrf_exempt 
+def ReactViews(request):
+    if request.method == 'GET':
+        print("whyyyyyyyyyyyyyyyyyyyyy")
+        project_id = request.GET.get('projectId')
+       
+        print("heljoooo " + project_id)
+        try:
+            print("inside try block")
+            pid1 = Project.objects.get(projectid=project_id)
+            issues = issue.objects.filter(projectId=pid1)
+            serializer = IssueSerializer(issues, many=True)
+            print(serializer.data)
+            # issue_data = [
+            #     {
+            #         'issueid': issue.issue_id,
+            #         'issuename': issue.IssueName,
+                    
+            #     } 
+            #     for issue in issues
+            # ]
+            # print(issue_data)
+
+            return Response(serializer.data)
+        except Project.DoesNotExist:
+            return JsonResponse({"error": "Project not found"}, status=status.HTTP_404_NOT_FOUND)
+        except issue.DoesNotExist:
+            return JsonResponse({"error": "Issues not found for this project"}, status=status.HTTP_404_NOT_FOUND)
+        except Exception as e:
+            return JsonResponse({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+@csrf_exempt      
 def add_issue(request):
   
     if request.method == 'POST':
         data = json.loads(request.body)
-        issue_name = data.get('issueName')  
+        issue_name = data.get('issueName') 
+        pid=data.get('projectId') 
+        pid1 = Project.objects.get(projectid =pid)
         print("heereee "+issue_name)
+        print(pid)
+        print(pid1)
         if issue_name:
             try:
                 print("hhhhhh")
-                new_issue = issue(IssueName=issue_name)
-                new_issue.save()  
+                new_issue = issue.objects.create(IssueName=issue_name, projectId=pid1)
                 print(new_issue)
+                
                 print("after")
                 return JsonResponse({'success': True, 'message': 'Issue added successfully', 'issue_id': new_issue.issue_id})
             except Exception as e:

@@ -1,26 +1,50 @@
-import React, { useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import React, { useState , useEffect} from 'react';
+import { useLocation, useParams } from 'react-router-dom';
 import CreateIssueForm from './CreateIssueForm';
 import './css/sprint.css'
+import { connect } from 'react-redux'; 
 import IssueStatus from './issueStatus';
 import IssueType from './issuseType';
 import Backlog from './Backlog';
-// import assignee from "/assignee.png";
+import axios from 'axios';
 
-const Sprint = () => {
-  const location = useLocation();
-  const searchParams = new URLSearchParams(location.search);
-  const projectId = searchParams.get('projectid');
-  console.log(projectId);
 
-  // State to manage form visibility
+
+const Sprint = ({token}) => {
+ const {projectid}=useParams()
+ console.log(token)
+ const [issues, setissues] = useState([]);
+
+  useEffect(() => {
+    const fetchIssues = async () => {
+      
+      try {
+        const response = await axios.get("http://localhost:8000/djapp/issues/", {
+          params: {
+            projectId: projectid 
+          },
+        });
+        console.log(response)
+        setissues(response.data);
+        console.log(issues) 
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+    
+    
+
+    fetchIssues(); // Fetch issues when component mounts
+  }, [projectid]); 
+
+  
   const [formOpen, setFormOpen] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);
   const [InputField, setInputField] = useState(false);
   const [buttonShow, setbuttonShow] = useState(true);
   const [inputValues, setInputValues] = useState([]);
 
-  // Function to open form
+ 
   const openForm = () => {
     setFormOpen(true);
   };
@@ -33,19 +57,6 @@ const Sprint = () => {
     setShowDropdown(!showDropdown); 
   };
   
-  const showInputField = () => {
-    setInputField(!showDropdown); 
-    setbuttonShow(false)
-    
-  };
-  const handleKeyPress = (event) => {
-    if (event.key === 'Enter') {
-      setInputField(false); 
-      setbuttonShow(true)
-      setInputValues([...inputValues, event.target.value]);
-      event.target.value = ''; 
-    }
-  };
   console.log("hereee")
  console.log(showDropdown)
 
@@ -54,7 +65,7 @@ const Sprint = () => {
     <div>
       <h1>Backlog Page</h1>
       <button onClick={openForm}>Create</button>
-      {formOpen && <CreateIssueForm projectId={projectId} onClose={closeForm} />}
+      {formOpen && <CreateIssueForm projectId={projectid} onClose={closeForm} />}
     </div>
     <div className="mainBox">
       
@@ -84,41 +95,17 @@ const Sprint = () => {
         </div>
      
 
-      {/* Second div with dotted box */}
-      {/* <div className={inputValues.length ? 'solid-box' : 'dotted-box'}>
-  {inputValues.map((value, index) => (
-    <div key={index} className="input-item">
-      
-      
-     
-      
-      <div>{value}</div>
-      <div className='right'>
-      <IssueStatus /> </div>
-      <img src="/assignee.png"alt="assignee" id="userIcon"/>
-   
-    </div>
-  ))}
-</div> */}
-
-      {/* Third div with create issue button */}
-      {/* <div className="create-issue">
-      {buttonShow && (
-              <button onClick={showInputField}>Create Issue</button>
-            )}
-        
-        {InputField && (
-              <div className='issueCreation'>
-                 <IssueType />
-                <input type="text" placeholder="type your issue here"   onKeyDown={handleKeyPress} />
-              </div>
-            )}
-      </div> */}
-      <Backlog />
+        {/* here i wanna pass filtered issue */}
+      <Backlog /> 
       </div>
+      {/* here i wanna pass all the  issue */}
     <Backlog />
     </>
   );
 };
+const mapStateToProps = (state) => ({
+  token:state.auth.access
+   
+ });
 
-export default Sprint;
+ export default connect(mapStateToProps)(Sprint);

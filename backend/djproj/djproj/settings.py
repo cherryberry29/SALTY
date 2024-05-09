@@ -59,7 +59,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
      'django.middleware.security.SecurityMiddleware',
-    'corsheaders.middleware.CorsMiddleware',
+    'corsheaders.middleware.CorsMiddleware'
 ]
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
@@ -165,7 +165,7 @@ REST_FRAMEWORK = {
 AUTHENTICATION_BACKENDS = (
     'social_core.backends.google.GoogleOAuth2',
    
-    'django.contrib.auth.backends.ModelBackend',
+    'django.contrib.auth.backends.ModelBackend'
 )
 
 SIMPLE_JWT = {
