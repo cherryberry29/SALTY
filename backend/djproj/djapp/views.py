@@ -2,25 +2,69 @@ from django.shortcuts import render
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from .models import *
+from rest_framework import status
+from rest_framework.response import Response
 from django.middleware.csrf import get_token
 from djproj.settings import EMAIL_HOST_USER
 from itsdangerous import BadSignature, SignatureExpired, URLSafeTimedSerializer
 from django.core.mail import send_mail
-
+from .serializers import *
+from rest_framework.views import APIView
+from rest_framework.decorators import api_view
+from rest_framework import generics
 import json
+from rest_framework_simplejwt.authentication import JWTAuthentication
+from rest_framework.permissions import IsAuthenticated
+
 @csrf_exempt 
+def ReactViews(request):
+    if request.method == 'GET':
+        print("whyyyyyyyyyyyyyyyyyyyyy")
+        # data = json.loads(request.body)
+        # project_id=data.get('projectId')
+
+        project_id = request.GET.get('projectId')
+        print("heljoooo " + project_id)
+        try:
+            print("inside try block")
+            pid1 = Project.objects.get(projectid=project_id)
+            issues = issue.objects.filter(projectId=pid1)
+            serializer = IssueSerializer(issues, many=True)
+            print(serializer.data)
+            # issue_data = [
+            #     {
+            #         'issueid': issue.issue_id,
+            #         'issuename': issue.IssueName,
+                    
+            #     } 
+            #     for issue in issues
+            # ]
+            # print(issue_data)
+
+            return JsonResponse(serializer.data,safe=False)
+        except Project.DoesNotExist:
+            return JsonResponse({"error": "Project not found"}, status=status.HTTP_404_NOT_FOUND)
+        except issue.DoesNotExist:
+            return JsonResponse({"error": "Issues not found for this project"}, status=status.HTTP_404_NOT_FOUND)
+        except Exception as e:
+            return JsonResponse({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+@csrf_exempt      
 def add_issue(request):
   
     if request.method == 'POST':
         data = json.loads(request.body)
-        issue_name = data.get('issueName')  
+        issue_name = data.get('issueName') 
+        pid=data.get('projectId') 
+        pid1 = Project.objects.get(projectid =pid)
         print("heereee "+issue_name)
+        print(pid)
+        print(pid1)
         if issue_name:
             try:
                 print("hhhhhh")
-                new_issue = issue(IssueName=issue_name)
-                new_issue.save()  
+                new_issue = issue.objects.create(IssueName=issue_name, projectId=pid1)
                 print(new_issue)
+                
                 print("after")
                 return JsonResponse({'success': True, 'message': 'Issue added successfully', 'issue_id': new_issue.issue_id})
             except Exception as e:
@@ -73,16 +117,23 @@ def generate_invitation_token(request):
         projectid = data.get('projectid')  # Get projectid from the request data
         serializer = URLSafeTimedSerializer('your-secret-key')
         token = serializer.dumps(email)
-
-        # Include projectid in the invitation link
-        invitation_link = f'http://localhost:3000/accept-invitation?projectid={projectid}&token={token}'
-
-        subject = "Join Project"
-        message = f"Welcome! You're invited to join the project with ID {projectid}. Click the link below to accept:\n{invitation_link}"
+        try:
+            project_ins = Project.objects.get(projectid=projectid)
+        except Project.DoesNotExist:
+            return JsonResponse({'error': 'Project not found'}, status=404)
         
-        send_mail(subject, message, EMAIL_HOST_USER, [email], fail_silently=True)
-        print("sent")
-        return JsonResponse({'token': token})
+        if Project_TeamMember.objects.filter(team_member_email=email,project=project_ins).exists() or project_ins.teamlead_email == email :
+            return JsonResponse({'error': 'Email is already associated with this project'}, status=400)
+
+        else:
+            invitation_link = f'http://localhost:3000/accept-invitation?projectid={projectid}&token={token}'
+
+            subject = "Join Project"
+            message = f"Welcome! You're invited to join the project with ID {projectid}. Click the link below to accept:\n{invitation_link}"
+            
+            send_mail(subject, message, EMAIL_HOST_USER, [email], fail_silently=True)
+            print("sent")
+            return JsonResponse({'token': token})
        
     else:
         return JsonResponse({'error': 'Method not allowed'}, status=405)
@@ -110,19 +161,10 @@ def process_invitation_token(request):
         data = json.loads(request.body)
         email = data.get('email')
         project_id = data.get('projectid')
-        print(project_id)
-        try:
-            project_ins = Project.objects.get(projectid=project_id)
-        except Project.DoesNotExist:
-            return JsonResponse({'error': 'Project not found'}, status=404)
-
-        if Project_TeamMember.objects.filter(team_member_email=email,project=project_ins).exists() or project_ins.teamlead_email == email :
-            return JsonResponse({'error': 'Email is already associated with this project'}, status=400)
-    
+        print(project_id)    
+        project_ins = Project.objects.get(projectid=project_id)
         team_member = Project_TeamMember.objects.create(team_member_email=email,project=project_ins)
-        
         team_member.save()
-
         return JsonResponse({'message': 'Invitation processed successfully'})
     else:
         return JsonResponse({'error': 'Method not allowed'}, status=405)

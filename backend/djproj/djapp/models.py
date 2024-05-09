@@ -111,7 +111,7 @@ class issue(models.Model):
     IssueName = models.CharField(max_length=30)
     issue_id = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
     # sprint = models.ForeignKey(Sprint, on_delete=models.SET_NULL, null=True, blank=True)
-    # projectId = models.ForeignKey(Project, on_delete=models.SET_NULL, null=True, blank=True)
+    projectId = models.ForeignKey(Project, on_delete=models.SET_NULL, null=True, blank=True)
     # is_addedTosprint=models.BooleanField(max_length=5)
     # status=models.CharField(max_length=30,default="TODO")
     # assignee=models.CharField(max_length=30,default=None)
