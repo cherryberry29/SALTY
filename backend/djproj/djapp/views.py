@@ -55,6 +55,9 @@ def add_issue(request):
         data = json.loads(request.body)
         issue_name = data.get('issueName') 
         pid=data.get('projectId') 
+        sprint=data.get('sprint') 
+        assigned_epic=data.get('assigned_epic')
+
         pid1 = Project.objects.get(projectid =pid)
         print("heereee "+issue_name)
         print(pid)
@@ -62,9 +65,9 @@ def add_issue(request):
         if issue_name:
             try:
                 print("hhhhhh")
-                new_issue = issue.objects.create(IssueName=issue_name, projectId=pid1)
+                new_issue = issue.objects.create(IssueName=issue_name, projectId=pid1,sprint=sprint,assigned_epic=assigned_epic)
                 print(new_issue)
-                
+                    
                 print("after")
                 return JsonResponse({'success': True, 'message': 'Issue added successfully', 'issue_id': new_issue.issue_id})
             except Exception as e:
@@ -239,5 +242,59 @@ def get_sprints(request):
             return JsonResponse({'error': 'Project ID is required'}, status=400)
     else:
         return JsonResponse({'error': 'Method not allowed'}, status=405)
+    
+@csrf_exempt
+def create_issue(request):
+    print("i got the issue")
+    if request.method == 'POST':
+        print("im inside post")
+        data = json.loads(request.body)
+        pid1 = Project.objects.get(projectid=data.get('ProjectId'))
+        if data.get('Sprint') !="":
+            sprint=Sprint.objects.get(sprint=data.get('Sprint'))
+        else:
+            sprint=None
+        print("sprint",sprint)
+        if data.get('Assigned_epic') !="":
+             epic=Epic.objects.get(EpicName=data.get('Assigned_epic'))
+        else:
+            epic=None
+        print("epic",epic)
 
+        
+        new_issue = issue.objects.create(
+            IssueName=data.get('IssueName'),
+            IssueType = data.get('IssueType'),
+            sprint = sprint,
+            projectId=pid1,
+            status=data.get('Status', 'TODO'),
+            assignee=data.get('Assignee',''),
+            assigned_by=data.get('Assigned_by',""),
+            description=data.get('Description',""),
+            assigned_epic=epic
+        )
+        return JsonResponse({'message': 'Issue created successfully'})
+    else:
+        return JsonResponse({'error': 'Only POST method allowed'}, status=405)
+
+@csrf_exempt
+def create_epic(request):
+    print("i got the epic")
+    if request.method == 'POST':
+        print("im inside epc post")
+        data = json.loads(request.body)
+        pid1 = Project.objects.get(projectid=data.get('ProjectId'))
+        new_epic = Epic.objects.create(
+            EpicName = data.get('epicName', 'TODO'),
+            projectId=pid1,
+            status=data.get('Status', 'TODO'),
+            assignee=data.get('Assignee',''),
+            assigned_by=data.get('Assigned_by',""),
+            description=data.get('Description',""),
+            start_date=data.get('StartDate',""),
+            end_date=data.get('DueDate',""),
+        )
+        return JsonResponse({'message': 'Issue created successfully'})
+    else:
+        return JsonResponse({'error': 'Only POST method allowed'}, status=405)
 

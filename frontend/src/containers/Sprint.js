@@ -1,12 +1,13 @@
-import React, { useState,useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import React, { useState , useEffect} from 'react';
+import { useLocation, useParams } from 'react-router-dom';
+
 import './css/sprint.css'
 import { connect } from 'react-redux'; 
 import IssueStatus from './issueStatus';
-import IssueType from './issuseType';
+
 import Backlog from './Backlog';
 import Add_team_members from './Add_team_members';
-import { useParams } from 'react-router-dom';
+
 import axios from 'axios';
 import IssueForm from './IssueForm';
 // import assignee from "/assignee.png";
@@ -24,7 +25,7 @@ const Sprint = ({token}) => {
       try {
         const response = await axios.get("http://localhost:8000/djapp/issues/", 
         {
-          params: { projectId: projectid }
+          params: { projectId: projectid}
       },
         );
         console.log(response)

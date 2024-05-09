@@ -38,7 +38,7 @@ const Backlog = ({ addIssue}) =>  {
 
       
       try {
-        await addIssue({ issueName: event.target.value,projectId:projectid });
+        await addIssue({ issueName: event.target.value,projectId:projectid,sprint:null,assigned_epic:null });
       } catch (error) {
         console.error('Error creating project:', error);
       }

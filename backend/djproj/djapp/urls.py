@@ -10,14 +10,9 @@ urlpatterns = [
     path('process_invitation_token/',process_invitation_token, name='process_invitation_token'),
     path('project_list/',project_list, name='project_list'),
     path('issues/', ReactViews, name='project-issues'),
+    path('create_issue/', create_issue, name='create_issue'),
+    path('create_epic/', create_epic, name= 'create_epic'),
 
-
-   
-
-
-    
-    
-   
     path('get_team_members/', get_team_members, name="get_team_members"),
     path('get_sprints/', get_sprints, name="get_sprints"),
     # path('project_dropdown_data/', project_dropdown_data, name="project_dropdown_data" ),
