@@ -1,0 +1,41 @@
+.display-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 20px; /* Adjust the gap between the two sections as needed */
+  }
+  
+  .issue-cards-container {
+    flex: 1;
+    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 5px;
+    overflow-y: auto; /* Add vertical scrolling if the content exceeds the container height */
+  }
+  
+  .info-display-container {
+    flex: 1;
+    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 5px;
+    overflow-y: auto; /* Add vertical scrolling if the content exceeds the container height */
+  }
+  
+  .issue-card {
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .issue-card:hover {
+    background-color: #f0f0f0;
+  }
+  
+  .nothing-displayed {
+    text-align: center;
+    margin-top: 20px;
+  }
+  

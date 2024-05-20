@@ -58,11 +58,6 @@ class Project(models.Model):
         projectid = models.CharField(primary_key=True, max_length=20)
         teamlead_email = models.EmailField( null=True)
 
-        # def save(self, *args, **kwargs):
-        #     if not self.projectid:
-        #         self.projectid = generate_project_id(self.projectname)
-        #     super().save(*args, **kwargs)
-
         def __str__(self):
             return f"{self.projectid} - {self.projectname}"
 
@@ -74,23 +69,6 @@ class Project_TeamMember(models.Model):
             return f"{self.project.projectid} - {self.team_member_email}"
 
 
-
-# def generate_project_id(project_name):
-#     # Extracting the first four characters if the project name is a single word
-#     if ' ' not in project_name:
-#         code = project_name[:4].upper()
-#     else:
-#         # Extracting two characters from the first word and two from the second word if there's a space
-#         words = re.split(r'\s+', project_name)
-#         code = (words[0][:3] + words[-1][:3]).upper()
-
-#     # Checking if the code consists of only letters
-#     if not code.isalpha():
-#         # If not, generating a new code with only letters
-#         code = ''.join(random.choices(string.ascii_uppercase, k=4))
-
-#     return code
-
 class Sprint(models.Model):
     sprint = models.CharField(primary_key=True, max_length=20, default=None)
     start_date = models.DateField()
@@ -100,21 +78,27 @@ class Sprint(models.Model):
     
 class Epic(models.Model):
     EpicName = models.CharField( max_length=20, default=None)
-    Epic_id = models.CharField(max_length=20, unique=True,primary_key=True)
+    projectId = models.ForeignKey(Project, on_delete=models.SET_NULL, null=True, blank=True,default="null")
+    Epic_id = models.UUIDField(primary_key=True,default=uuid.uuid4, editable=False, unique=True)
     start_date = models.DateField()
     end_date = models.DateField()
-    guide=models.CharField(max_length=30)
+    status = models.CharField( max_length=20, default=None)
+    assignee = models.CharField( max_length=80, default=None)
+    assigned_by = models.CharField( max_length=80, default=None)
+    description = models.TextField(max_length=300,default="")
+    file_field = models.FileField(upload_to='uploads/', default='default_file.txt')
 
+    
 
 class issue(models.Model):
-    IssueName = models.CharField(max_length=30, default='')  # Default value is an empty string
+    IssueName = models.CharField(max_length=30,default="")
     issue_id = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
-    IssueType = models.CharField(max_length=15, default='')
-    sprint = models.ForeignKey(Sprint, on_delete=models.SET_NULL, null=True, blank=True)
-    projectId = models.ForeignKey(Project, on_delete=models.SET_NULL, null=True, blank=True)
-    status = models.CharField(max_length=30, default="TODO")  # Default value is "TODO"
-    assignee = models.CharField(max_length=30, default="")  # Default value is an empty string
-    assigned_by = models.CharField(max_length=30, default="")  # Default value is an empty string
-    description = models.TextField(max_length=30, default="")  # Default value is an empty string
-    assigned_epic = models.ForeignKey(Epic, on_delete=models.SET_NULL, null=True, blank=True, default=None)  # Default value is None
-
+    sprint = models.ForeignKey(Sprint, on_delete=models.SET_NULL, null=True, blank=True,default="null")
+    projectId = models.ForeignKey(Project, on_delete=models.SET_NULL, null=True, blank=True,default="null")
+    IssueType=models.CharField(max_length=30,default="")
+    status=models.CharField(max_length=30,default="")
+    assignee=models.CharField(max_length=30,default="")
+    assigned_by=models.CharField(max_length=30,default="")
+    description=models.TextField(max_length=30,default="")
+    file_field = models.FileField(upload_to='uploads/', default='default_file.txt')
+    assigned_epic=models.ForeignKey(Epic, on_delete=models.SET_NULL, null=True, blank=True,default="")

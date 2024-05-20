@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './css/CreateIssueForm.css';
 import Scroll from '../components/Scroll';
-import { useParams } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 const CreateIssueForm = ({ onClose, user }) => {
@@ -11,6 +10,7 @@ const CreateIssueForm = ({ onClose, user }) => {
   const [summary, setSummary] = useState('');
   const [assignee, setAssignee] = useState('');
   const [sprint, setSprint] = useState('');
+  const [epic, setEpic] = useState('');
   const [attachment, setAttachment] = useState(null);
   const [startDate, setStartDate] = useState('');
   const [dueDate, setDueDate] = useState('');
@@ -18,7 +18,45 @@ const CreateIssueForm = ({ onClose, user }) => {
   const [sprintOptions, setSprintOptions] = useState([]);
   const [projects, setProjects] = useState([]);
   const [selectedProject, setSelectedProject] = useState('');
+  const [epicName, setEpicName] = useState('');
   const [assignedby, setAssignedby] = useState(user.email);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      if (issueType !== "Epic") {
+        const response = await axios.post('http://localhost:8000/djapp/create_issue/', {
+          IssueType: issueType,
+          IssueName: issueType,
+          Sprint: sprint,
+          Status: status,
+          Assignee: assignee,
+          Assigned_by: assignedby,
+          Description: summary,
+          Assigned_epic: null, // Since it's not an Epic, set Assigned_epic to null
+          ProjectId: selectedProject,
+        });
+        onClose();
+      } else {
+        const formattedStartDate = new Date(startDate).toISOString().split('T')[0];
+        const formattedDueDate = new Date(dueDate).toISOString().split('T')[0];
+        const response = await axios.post('http://localhost:8000/djapp/create_epic/', {
+          epicName:epicName,
+          Status: status,
+          Assignee: assignee,
+          Assigned_by: assignedby,
+          Description: summary,
+          ProjectId: selectedProject,
+          StartDate: formattedStartDate,
+          DueDate: formattedDueDate,
+        });
+        onClose(); // Close modal or perform other actions after creating an Epic
+      }
+    } catch (error) {
+      console.error('Error creating issue:', error);
+    }
+  };
+
+
 
   useEffect(() => {
     const fetchProjects = async () => {
@@ -51,27 +89,6 @@ const CreateIssueForm = ({ onClose, user }) => {
 
     fetchTeamMembersAndSprints();
   }, [selectedProject]);
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      await axios.post('http://localhost:8000/djapp/create_issue/', {
-        IssueType :issueType,
-        IssueName : issueType,
-        Sprint: sprint,
-        Status: status,
-        Assignee:assignee,
-        Assigned_by: assignedby,
-        Description:summary,
-        Assigned_epic: null,
-        ProjectId : selectedProject,
-
-      });
-      onClose();
-    } catch (error) {
-      console.error('Error creating issue:', error);
-    }
-  };
 
 
   const handleAttachmentChange = (e) => {
@@ -136,7 +153,7 @@ const CreateIssueForm = ({ onClose, user }) => {
             )}
           </select>
         </div>
-        <div>
+        {issueType != "Epic" &&(<div>
           <label>Sprint:</label>
           <select>
             <option value="">Select...</option>
@@ -150,7 +167,7 @@ const CreateIssueForm = ({ onClose, user }) => {
               <option value="" disabled>Loading...</option>
             )}
           </select>
-        </div>
+        </div>)}
         {issueType === "Epic" && (
           <div>
             <label>Start Date:</label>
@@ -158,6 +175,16 @@ const CreateIssueForm = ({ onClose, user }) => {
               type="datetime-local"
               value={startDate}
               onChange={(e) => setStartDate(e.target.value)}
+            />
+          </div>
+        )}
+        {issueType === "Epic" && (
+          <div>
+            <label>Epic Name:</label>
+            <input
+              type="text"
+              value={epicName}
+              onChange={(e) => setEpicName(e.target.value)}
             />
           </div>
         )}

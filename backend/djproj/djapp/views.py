@@ -2,25 +2,73 @@ from django.shortcuts import render
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from .models import *
+from rest_framework import status
+from rest_framework.response import Response
 from django.middleware.csrf import get_token
 from djproj.settings import EMAIL_HOST_USER
 from itsdangerous import BadSignature, SignatureExpired, URLSafeTimedSerializer
 from django.core.mail import send_mail
-
+from .serializers import *
+from rest_framework.views import APIView
+from rest_framework.decorators import api_view
+from rest_framework import generics
 import json
+from rest_framework_simplejwt.authentication import JWTAuthentication
+from rest_framework.permissions import IsAuthenticated
+from django.views.decorators.http import require_POST
+
 @csrf_exempt 
+def ReactViews(request):
+    if request.method == 'GET':
+        print("whyyyyyyyyyyyyyyyyyyyyy")
+        # data = json.loads(request.body)
+        # project_id=data.get('projectId')
+
+        project_id = request.GET.get('projectId')
+        print("heljoooo " + project_id)
+        try:
+            print("inside try block")
+            pid1 = Project.objects.get(projectid=project_id)
+            issues = issue.objects.filter(projectId=pid1)
+            serializer = IssueSerializer(issues, many=True)
+            print(serializer.data)
+            # issue_data = [
+            #     {
+            #         'issueid': issue.issue_id,
+            #         'issuename': issue.IssueName,
+                    
+            #     } 
+            #     for issue in issues
+            # ]
+            # print(issue_data)
+
+            return JsonResponse(serializer.data,safe=False)
+        except Project.DoesNotExist:
+            return JsonResponse({"error": "Project not found"}, status=status.HTTP_404_NOT_FOUND)
+        except issue.DoesNotExist:
+            return JsonResponse({"error": "Issues not found for this project"}, status=status.HTTP_404_NOT_FOUND)
+        except Exception as e:
+            return JsonResponse({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+@csrf_exempt      
 def add_issue(request):
   
     if request.method == 'POST':
         data = json.loads(request.body)
-        issue_name = data.get('issueName')  
+        issue_name = data.get('issueName') 
+        pid=data.get('projectId') 
+        sprint=data.get('sprint') 
+        assigned_epic=data.get('assigned_epic')
+
+        pid1 = Project.objects.get(projectid =pid)
         print("heereee "+issue_name)
+        print(pid)
+        print(pid1)
         if issue_name:
             try:
                 print("hhhhhh")
-                new_issue = issue(IssueName=issue_name)
-                new_issue.save()  
+                new_issue = issue.objects.create(IssueName=issue_name, projectId=pid1,sprint=sprint,assigned_epic=assigned_epic)
                 print(new_issue)
+                    
                 print("after")
                 return JsonResponse({'success': True, 'message': 'Issue added successfully', 'issue_id': new_issue.issue_id})
             except Exception as e:
@@ -127,8 +175,6 @@ def process_invitation_token(request):
     else:
         return JsonResponse({'error': 'Method not allowed'}, status=405)
     
-from django.http import JsonResponse
-from .models import Project, Project_TeamMember
 
 def project_list(request):
     if request.method == 'GET':
@@ -197,26 +243,96 @@ def get_sprints(request):
             return JsonResponse({'error': 'Project ID is required'}, status=400)
     else:
         return JsonResponse({'error': 'Method not allowed'}, status=405)
-
+    
 @csrf_exempt
 def create_issue(request):
     print("i got the issue")
     if request.method == 'POST':
         print("im inside post")
         data = json.loads(request.body)
+        pid1 = Project.objects.get(projectid=data.get('ProjectId'))
+        if data.get('Sprint') !="":
+            sprint=Sprint.objects.get(sprint=data.get('Sprint'))
+        else:
+            sprint=None
+        print("sprint",sprint)
+        if data.get('Assigned_epic') !="":
+             epic=Epic.objects.get(EpicName=data.get('Assigned_epic'))
+        else:
+            epic=None
+        print("epic",epic)
         new_issue = issue.objects.create(
             IssueName=data.get('IssueName'),
             IssueType = data.get('IssueType'),
-            sprint_id=data.get('Sprint',''),
-            projectId_id=data.get('selectedProject'),
+            sprint = sprint,
+            projectId=pid1,
             status=data.get('Status', 'TODO'),
             assignee=data.get('Assignee',''),
-            assigned_by=data.get('Assigned_by', None),
-            description=data.get('Description', None),
-            assigned_epic_id=data.get('Assigned_epic', None)
+            assigned_by=data.get('Assigned_by',""),
+            description=data.get('Description',""),
+            assigned_epic=epic
         )
         return JsonResponse({'message': 'Issue created successfully'})
     else:
         return JsonResponse({'error': 'Only POST method allowed'}, status=405)
+
+@csrf_exempt
+def create_epic(request):
+    print("i got the epic")
+    if request.method == 'POST':
+        print("im inside epc post")
+        data = json.loads(request.body)
+        pid1 = Project.objects.get(projectid=data.get('ProjectId'))
+        new_epic = Epic.objects.create(
+            EpicName = data.get('epicName', 'TODO'),
+            projectId=pid1,
+            status=data.get('Status', 'TODO'),
+            assignee=data.get('Assignee',''),
+            assigned_by=data.get('Assigned_by',""),
+            description=data.get('Description',""),
+            start_date=data.get('StartDate',""),
+            end_date=data.get('DueDate',""),
+        )
+        return JsonResponse({'message': 'Issue created successfully'})
+    else:
+        return JsonResponse({'error': 'Only POST method allowed'}, status=405)
+
+
+@csrf_exempt
+def filters_function(request):
+    print("I'm getting the function call..")
+    if request.method == 'GET':
+        projectid = request.GET.get('projectid')
+        filter_type = request.GET.get('filter')
+        status = request.GET.get('status')
+        current_user = request.GET.get('currentUser')
+        print(projectid, filter_type, status, current_user)
+    
+        if not projectid:
+            return JsonResponse({"error": "Project ID is required"}, status=400)
+    
+        if filter_type == 'all_issues':
+            issues = list(issue.objects.filter(projectId_id=projectid).values())
+            
+        elif filter_type == 'assigned_to_me':
+            issues = list(issue.objects.filter(projectId_id=projectid, assignee=current_user).values())
+            
+        elif filter_type == 'unassigned':
+            issues = list(issue.objects.filter(projectId_id=projectid, assignee='').values())
+           
+        elif filter_type == 'epics':
+            issues = list(Epic.objects.filter(projectId_id=projectid).values())
+            
+        elif filter_type == 'Status':
+            issues = list(issue.objects.filter(projectId_id=projectid, status=status).values())
+            
+        else:
+            return JsonResponse({"error": "Invalid filter type"}, status=400)
+    
+    return JsonResponse(issues, safe=False)
+
+
+def trial(request):
+    print("im getting the call")
 
 
