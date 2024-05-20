@@ -4,8 +4,10 @@ import { useLocation, useParams } from 'react-router-dom';
 import './css/sprint.css'
 import { connect } from 'react-redux'; 
 import IssueStatus from './issueStatus';
-import IssueType from './issuseType';
+
 import Backlog from './Backlog';
+import Add_team_members from './Add_team_members';
+
 import axios from 'axios';
 import IssueForm from './IssueForm';
 // import assignee from "/assignee.png";
@@ -66,6 +68,8 @@ const Sprint = ({token}) => {
     <>
     <div>
       <h1>Backlog Page</h1>
+      
+      <Add_team_members projectid={projectid} />
       <button onClick={openForm}>Create</button>
       {formOpen && (
           <div className="modal">

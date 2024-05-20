@@ -121,16 +121,23 @@ def generate_invitation_token(request):
         projectid = data.get('projectid')  # Get projectid from the request data
         serializer = URLSafeTimedSerializer('your-secret-key')
         token = serializer.dumps(email)
-
-        # Include projectid in the invitation link
-        invitation_link = f'http://localhost:3000/accept-invitation?projectid={projectid}&token={token}'
-
-        subject = "Join Project"
-        message = f"Welcome! You're invited to join the project with ID {projectid}. Click the link below to accept:\n{invitation_link}"
+        try:
+            project_ins = Project.objects.get(projectid=projectid)
+        except Project.DoesNotExist:
+            return JsonResponse({'error': 'Project not found'}, status=404)
         
-        send_mail(subject, message, EMAIL_HOST_USER, [email], fail_silently=True)
-        print("sent")
-        return JsonResponse({'token': token})
+        if Project_TeamMember.objects.filter(team_member_email=email,project=project_ins).exists() or project_ins.teamlead_email == email :
+            return JsonResponse({'error': 'Email is already associated with this project'}, status=400)
+
+        else:
+            invitation_link = f'http://localhost:3000/accept-invitation?projectid={projectid}&token={token}'
+
+            subject = "Join Project"
+            message = f"Welcome! You're invited to join the project with ID {projectid}. Click the link below to accept:\n{invitation_link}"
+            
+            send_mail(subject, message, EMAIL_HOST_USER, [email], fail_silently=True)
+            print("sent")
+            return JsonResponse({'token': token})
        
     else:
         return JsonResponse({'error': 'Method not allowed'}, status=405)
@@ -158,19 +165,10 @@ def process_invitation_token(request):
         data = json.loads(request.body)
         email = data.get('email')
         project_id = data.get('projectid')
-        print(project_id)
-        try:
-            project_ins = Project.objects.get(projectid=project_id)
-        except Project.DoesNotExist:
-            return JsonResponse({'error': 'Project not found'}, status=404)
-
-        if Project_TeamMember.objects.filter(team_member_email=email,project=project_ins).exists() or project_ins.teamlead_email == email :
-            return JsonResponse({'error': 'Email is already associated with this project'}, status=400)
-    
+        print(project_id)    
+        project_ins = Project.objects.get(projectid=project_id)
         team_member = Project_TeamMember.objects.create(team_member_email=email,project=project_ins)
-        
         team_member.save()
-
         return JsonResponse({'message': 'Invitation processed successfully'})
     else:
         return JsonResponse({'error': 'Method not allowed'}, status=405)

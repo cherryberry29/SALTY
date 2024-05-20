@@ -8,6 +8,7 @@ import IssueStatus from './issueStatus';
 import { clickProject } from '../actions/auth'; 
 
 
+import Add_team_members from './Add_team_members';
 
 
 const Backlog = ({ addIssue}) =>  {
@@ -19,8 +20,9 @@ const Backlog = ({ addIssue}) =>  {
   const {projectid}=useParams();
 
 
-  
-console.log(projectid)
+
+
+
 
   const showInputField = () => {
     setInputField(!showDropdown);
@@ -45,9 +47,9 @@ console.log(projectid)
 };
 
   return (
+    
     <>
-    <h1>{projectid}</h1>
-    {/* <h1>{project_id}</h1> */}
+     
       <div className={inputValues.length ? 'solid-box' : 'dotted-box'}>
         
         {inputValues.map((value, index) => (
