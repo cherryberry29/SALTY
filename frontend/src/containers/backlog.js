@@ -19,11 +19,6 @@ const Backlog = ({ addIssue}) =>  {
   const [draggedEle, setDragged] = useState([]);
   const {projectid}=useParams();
 
-
-
-
-
-
   const showInputField = () => {
     setInputField(!showDropdown);
     setButtonShow(false);

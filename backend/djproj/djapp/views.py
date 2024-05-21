@@ -313,7 +313,7 @@ def filters_function(request):
             issues = list(issue.objects.filter(projectId_id=projectid).values())
             
         elif filter_type == 'assigned_to_me':
-            issues = list(issue.objects.filter(projectId_id=projectid, assignee=current_user).values())
+            issues = list(issue.objects.filter(projectId_id=projectid,assignee=current_user).values())
             
         elif filter_type == 'unassigned':
             issues = list(issue.objects.filter(projectId_id=projectid, assignee='').values())
@@ -330,7 +330,23 @@ def filters_function(request):
     return JsonResponse(issues, safe=False)
 
 
-def trial(request):
-    print("im getting the call")
-
-
+@csrf_exempt
+def update_issue(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        try:
+            issue_obj = issue.objects.get(issue_id=data['issue_id'])
+            issue_obj.IssueType = data.get('IssueType', issue_obj.IssueType)
+            issue_obj.description = data.get('description', issue_obj.description)
+            issue_obj.status = data.get('status', issue_obj.status)
+            issue_obj.assignee = data.get('assignee', issue_obj.assignee)
+            issue_obj.assigned_by = data.get('assigned_by', issue_obj.assigned_by)
+            issue_obj.assigned_epic_id = data.get('assigned_epic_id', issue_obj.assigned_epic_id)
+            issue_obj.sprint_id = data.get('sprint_id', issue_obj.sprint_id)
+            issue_obj.projectId_id = data.get('projectId_id', issue_obj.projectId_id)
+            issue_obj.file_field = data.get('file_field', issue_obj.file_field)
+            issue_obj.save()
+            return JsonResponse({'status': 'success'})
+        except issue.DoesNotExist:
+            return JsonResponse({'status': 'error', 'message': 'Issue not found'})
+    return JsonResponse({'status': 'error', 'message': 'Invalid request method'})

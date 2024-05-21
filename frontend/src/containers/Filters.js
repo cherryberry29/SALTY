@@ -82,18 +82,16 @@ const Filters = ({ isAuthenticated, user }) => {
             <h1>No issues found</h1>
           )}
         </div>
-          <div className='info-display-container'>
+        <div className='info-display-container'>
           {selectedIssue ? (
-          <DisplayIssueFilters data={[selectedIssue]} />
-        ) : (
-          <div className="nothing-displayed">
-            <h6>Select a Issue</h6>
-          </div>
-        )}
-          </div>
-        
+            <DisplayIssueFilters data={selectedIssue} />
+          ) : (
+            <div className="nothing-displayed">
+              <h6>Select an Issue</h6>
+            </div>
+          )}
+        </div>
       </div>
-
     </div>
   );
 };

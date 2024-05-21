@@ -16,5 +16,5 @@ urlpatterns = [
     path('csrf_token/', csrf_token, name='csrf_token'),
     path('create_issue/', create_issue, name='create_issue'),
     path('filters_function/', filters_function, name='filters_function'),
-    path('trial/', trial, name='trial'),
+    path('update_issue/', update_issue, name='update_issue'),
 ]

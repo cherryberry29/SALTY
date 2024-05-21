@@ -1,4 +1,5 @@
 .display-container {
+  margin-top: 2rem;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -14,6 +15,7 @@
   }
   
   .info-display-container {
+    
     flex: 1;
     border: 1px solid #ccc;
     padding: 10px;

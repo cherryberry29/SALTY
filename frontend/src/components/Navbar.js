@@ -98,10 +98,14 @@ const Navbar = ({ logout, isAuthenticated, user }) => {
                     </li>
                  
                  
-
+                    
                     <li className='nav-item'>
+                   
                         <button className='nav-button'>Filters</button>
+                    
                     </li>
+                   
+                    
                     <li className='nav-item'>
                         <button className='nav-button'>Teams</button>
                     </li>
