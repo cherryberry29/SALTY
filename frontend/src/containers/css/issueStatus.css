@@ -1,0 +1,48 @@
+/* styles.css */
+
+/* Style the custom dropdown container */
+.custom-dropdown {
+    position: relative;
+    display: inline-block;
+}
+  
+/* Style the dropdown button */
+select {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-color: #fff;
+    color: #333;
+    padding: 8px 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    outline: none;
+}
+  
+/* Style the dropdown options */
+select option {
+    background-color: #fff;
+    color: #333;
+}
+  
+/* Style the dropdown button when hovered */
+select:hover {
+    border-color: #666;
+}
+  
+/* Style the dropdown button when focused */
+select:focus {
+    border-color: #333;
+}
+  
+/* Style the dropdown arrow */
+.dropdown-arrow {
+    position: absolute;
+    top: calc(50% - 3px); /* Adjust vertical position */
+    right: 10px;
+    width: 0;
+    height: 0;
+    border-left: 6px solid
+}

@@ -1,0 +1,132 @@
+/* General styling */
+.body {
+  margin: 1rem;
+}
+
+/* Container styling */
+.display-container {
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.issue-cards-container {
+  flex: 1;
+  border: 1px solid #ccc;
+  padding: 10px;
+  border-radius: 8px;
+  overflow-y: auto;
+}
+
+.info-display-container {
+  flex: 1;
+  border: 1px solid #e6e4e4;
+  padding: 10px;
+  border-radius: 5px;
+  overflow-y: auto;
+}
+
+.issue-card {
+  border: 1px solid #ddd;
+  background-color: #e0dfdf;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.issue-card:hover {
+  background-color: #f0f0f0;
+}
+
+.nothing-displayed {
+  text-align: center;
+  color: #888;
+  font-style: italic;
+  margin-top: 20px;
+}
+
+/* Dropdown styling */
+
+.dropdown select {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-sizing: border-box;
+  background-color: white;
+  font-size: 16px;
+  transition: border-color 0.3s;
+}
+
+.dropdown select:focus {
+  border-color: #888;
+  outline: none;
+}
+
+/* Enhanced DisplayIssueFilters styling */
+.issue-card h1 {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.issue-card p {
+  margin-bottom: 10px;
+}
+
+.issue-card p strong {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.issue-card select, 
+.issue-card textarea, 
+.issue-card input[type="text"] {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.issue-card textarea {
+  height: 80px;
+  resize: vertical;
+}
+
+.issue-card a {
+  color: #0066cc;
+  text-decoration: none;
+}
+
+.issue-card a:hover {
+  text-decoration: underline;
+}
+
+.buttons {
+  margin-top: 1rem;
+  height: 2rem;
+  width: 5rem;
+  border-radius: 3px;
+  justify-content: space-evenly;
+  font-size: 1rem;
+  background-color: #e9357d;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.buttons:hover {
+  background-color: #d22e6e;
+}
+
+.issue-card label {
+  font-weight: bold;
+  margin-bottom: 5px;
+  display: block;
+}

@@ -1,0 +1,24 @@
+
+.buttons {
+    margin-top: 1rem;
+    height: 2rem;
+    width: 5rem;
+    border-radius: 3px;
+    justify-content: space-evenly;
+    font-size: 1rem;
+    background-color: #e9357d;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.buttons:hover {
+    background-color: #d22e6e;
+}
+
+
+
+
+
+
+

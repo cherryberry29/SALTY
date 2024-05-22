@@ -1,0 +1,42 @@
+/* IssueType.css */
+
+.issue-type-dropdown {
+    display: flex;
+    flex-direction: row;
+  }
+  
+  select {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-color: #fff;
+    color: #333;
+    padding: 8px 10px; /* Adjust padding as needed */
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    outline: none;
+    width: 95%; /* Set width to 50% of the container */
+  }
+  
+  select:hover {
+    border-color: #666;
+  }
+  
+  select:focus {
+    border-color: #333;
+  }
+  
+  .icon-container {
+    display: inline-block;
+    vertical-align: middle;
+    margin-left: 10px; /* Adjust as needed */
+  }
+  
+  .icon-container img {
+    width: 24px; /* Adjust icon size as needed */
+    height: 24px; /* Adjust icon size as needed */
+    margin-right: 5px; /* Adjust spacing between icons as needed */
+  }
+ 

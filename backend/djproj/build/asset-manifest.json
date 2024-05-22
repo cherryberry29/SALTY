@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/static/css/main.ffb8ca6e.css",
+    "main.js": "/static/js/main.f0eeff70.js",
+    "static/media/ramaiah-institute-of-technology.jpg": "/static/media/ramaiah-institute-of-technology.78237be3c08252ce6c2e.jpg",
+    "static/media/redux.cjs": "/static/media/redux.7edfc461ab353f1712ab.cjs",
+    "index.html": "/index.html",
+    "main.ffb8ca6e.css.map": "/static/css/main.ffb8ca6e.css.map",
+    "main.f0eeff70.js.map": "/static/js/main.f0eeff70.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.ffb8ca6e.css",
+    "static/js/main.f0eeff70.js"
+  ]
+}
