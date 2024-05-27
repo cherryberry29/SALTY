@@ -16,7 +16,7 @@ const IssueType = ({ onSelect }) => {
   };
 
   return (
-    <div className="container">
+    <div className="Container">
       <div className="toggle-div" onClick={toggleOptions}>
         <img src={`/${selectedOption.toLowerCase()}.jpg`} alt={selectedOption} className="selected-icon" width='20px' height='20px'/>
         <span className="arrow">{isOptionsVisible ? '▲' : '▼'}</span>

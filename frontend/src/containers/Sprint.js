@@ -152,9 +152,9 @@ const Sprint = ({ sprint }) => {
             </div>
 
 
-            <div className="dropdown" ><button className="dropdown" onClick={toggleDropdown}>...</button></div>
+            <div className="dropdownC" ><button className="Dropdown" onClick={toggleDropdown}>...</button></div>
             {showDropdown && (
-              <div className="dropdown-Content">
+              <div className="Dropdown-Content">
                 <span onClick={handleEditSprint}>Edit</span>
                 <span onClick={handleDeleteSprint}>Delete</span>
               </div>
@@ -165,7 +165,7 @@ const Sprint = ({ sprint }) => {
 
         </div>
 
-        {backlogsListOpen && <Backlog issuesList={issues} sprint_name={null} />}
+        {backlogsListOpen && <Backlog issuesList={issues} sprint_name={sprint.sprint} />}
       </div>
       {/* here i wanna pass all the  issue */}
 

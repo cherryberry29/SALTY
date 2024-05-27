@@ -1,112 +1,197 @@
-/* styles.css */
+/* General Styles */
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f0f2f5;
+  color: #333;
+  margin: 0;
+  padding: 0;
+}
 
-/* Sprint details */
+button {
+  background-color: #a8406a;
+  padding: 5px 5px;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  outline: none;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #a8406a;
+}
+
+/* Sprint Details */
 .mainBox {
-    padding: 20px;
-    border-radius: 5px;
-    background-color: #f9f9f9;
-    max-width: 800px;
-    margin: 0 auto;
-  }
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  background-color: #fff;
+  max-width: 800px;
+  margin: 25px auto;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
 .sprint-details {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 20px;
-  }
-  
-  .left-section {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 20px;
+  margin-top: 20px;
+}
 
-  }
-  .chotadabba{
-    position: absolute;
-    left:379px;
-  }
-  .chotadabba2{
-    position: absolute;
-    left:460px;
-  }
+.left-section {
+  display: flex;
+  flex-direction: row;
   
+}
+
+.right-section {
+  position: relative;
+  display: flex;
+  
+  /* align-items: center; */
+  /* justify-content: flex-end; */
+}
+.pencilIcon{
+  display:flex;
+  flex-direction:row;
+}
+.addDates{
+  margin-left: 3px;
+  
+}
+
+.chotadabba1{
+  font-weight: bold;
+}
+
+.chotadabba1, .chotadabba, .chotadabba2 {
+  margin-bottom: 10px;
+}
+
+.chotadabba {
+  margin-right: 7px; /* Minimized space between chotadabba and chotadabba2 */
+}
+
+.DATE {
+  display: flex;
+  position:absolute;
+  left:420px;
+  align-items: center;
+}
+
+.Dropdown {
+  position: relative;
+  cursor: pointer;
+  background: none;
+  border: none;
+  color: #8a1d1d;
+  /* margin-left:3px; */
+  font-size: 18px;
+}
+
+.Dropdown-Content {
+  display: block;
+  position: absolute;
+  right: 0;
+  background-color: #fff;
+  min-width: 120px;
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.Dropdown-Content span {
+  padding: 12px 16px;
+  display: block;
+  color: #333;
+  text-decoration: none;
+}
+
+.Dropdown-Content span:hover {
+  background-color: #f1f1f1;
+}
+
+.Dropdown:hover .dropdown-Content {
+  display: block;
+}
+
+/* Additional Styles */
+.Dotted-box {
+  width: 100%;
+  padding: 20px;
+  border: 2px dotted #999;
+  margin-top: 20px;
+  border-radius: 10px;
+}
+
+.solid-box {
+  width: 100%;
+  padding: 20px;
+  border: 2px solid #999;
+  margin-top: 20px;
+  border-radius: 10px;
+}
+
+.issueType {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.input-item {
+  background-color: #f9f9f9;
+  border-bottom: 1px solid #ccc;
+  padding: 10px;
+  margin-bottom: 10px;
+  display: flex;
+  
+  align-items: center;
+}
+.right{
+  position:absolute;
+  left:800px;
+}
+#userIcon{
+  position:absolute;
+  left:950px;
+}
+.value{
+  margin-left:8px;
+}
+
+.create-issue {
+  margin-top: 20px;
+}
+
+.issueCreation {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.EnterIssue {
+  min-height: 40px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 5px;
+  width:100%;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .mainBox {
+    padding: 15px;
+  }
+
+  .sprint-details {
+    grid-template-columns: 1fr;
+  }
+
   .right-section {
-    display: flex;
-    align-items: center;
-   
-    /* flex-direction: row; */
-    justify-content: space-between;
-  }
-  
-  .dropdown {
-    position: absolute;
-    left:870px;
-    cursor: pointer;
-  }
-  
-  /* Dropdown content */
-  .dropdown-content {
-    /* display: none; */
-    position: absolute;
-    background-color: #f9f9f9;
-    min-width: 120px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-    z-index: 1;
-  }
-  input{
-    width: 100%;
-    border: solid ;
-
-  }
-  
-  .dropdown-content span {
-    padding: 12px 16px;
-    display: block;
-  }
-  
-  .dropdown:hover .dropdown-content {
-    display: block;
-  }
-  
-  /* Dotted box */
-  .dotted-box {
-    width: 100%;
-    height: 100px;
-    border: 2px dotted #999;
     margin-top: 20px;
+    justify-content: center;
   }
-  .solid-box {
-    width: 100%;
-    padding: 10px;
-    margin-top: 20px;
-    border: 2px solid #999; /* Solid border */
-  }
-  
-  .input-item {
-    background-color: #f2f2f2; /* Light background color */
-    border-bottom: 1px solid #ccc; /* Solid border at bottom */
-    padding: 10px;
-    margin-bottom: 10px;
-    display: flex;
-    flex-direction: row;
-  }
-  
-  /* Create issue button */
-  .create-issue {
-    margin-top: 20px;
-    
-  
-  }
-  .right{
-    position:relative;
-    left:450px;
-  }
-  #userIcon{
-    position:relative;
-    left:500px;
-  }
-  .issueCreation{
-    display: flex;
-    flex-direction: row;
-} 
-  
-  
+}
