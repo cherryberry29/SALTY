@@ -70,10 +70,12 @@ class Project_TeamMember(models.Model):
 
 
 class Sprint(models.Model):
+    
     sprint = models.CharField(primary_key=True, max_length=20, default=None)
-    start_date = models.DateField()
-    end_date = models.DateField()
-    sprint_goal=models.TextField(null=True,default="okay")
+    start_date = models.DateField(default="2003-04-25")
+    end_date = models.DateField(default="2003-04-25")
+    sprint_goal=models.TextField(null=True,default="")
+    status=models.CharField( max_length=20, default="start")
     project = models.ForeignKey(Project, on_delete=models.SET_NULL, null=True, blank=True)
     
 class Epic(models.Model):
@@ -81,7 +83,7 @@ class Epic(models.Model):
     projectId = models.ForeignKey(Project, on_delete=models.SET_NULL, null=True, blank=True,default="null")
     Epic_id = models.UUIDField(primary_key=True,default=uuid.uuid4, editable=False, unique=True)
     start_date = models.DateField()
-    end_date = models.DateField()
+    end_date = models.DateField(default='')
     status = models.CharField( max_length=20, default=None)
     assignee = models.CharField( max_length=80, default=None)
     assigned_by = models.CharField( max_length=80, default=None)
@@ -96,7 +98,7 @@ class issue(models.Model):
     sprint = models.ForeignKey(Sprint, on_delete=models.SET_NULL, null=True, blank=True,default="null")
     projectId = models.ForeignKey(Project, on_delete=models.SET_NULL, null=True, blank=True,default="null")
     IssueType=models.CharField(max_length=30,default="")
-    status=models.CharField(max_length=30,default="")
+    status=models.CharField(max_length=30,default="todo")
     assignee=models.CharField(max_length=30,default="")
     assigned_by=models.CharField(max_length=30,default="")
     description=models.TextField(max_length=30,default="")

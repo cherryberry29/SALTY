@@ -5,6 +5,7 @@ import Login from './containers/Login';
 import Backlog from './containers/Sprint';
 import Project from './containers/Project';
 import ProjectPage from './containers/ProjectPage';
+import DisplayBacklog from './containers/DisplayBacklog';
 import Filters from './containers/Filters';
 import Signup from './containers/Signup';
 import Activate from './containers/Activate';
@@ -36,7 +37,7 @@ const App = () => {
             <Route path="/project" element={<Project />} />
             <Route path="/project/:projectid" element={<ProjectPage />} />
             <Route path="/accept-invitation" element={<Accept_invitation />} />
-            <Route path="/project/:projectid/backlog" element={<Sprint/>} />
+            <Route path="/project/:projectid/backlog" element={<DisplayBacklog/>} />
             <Route path="/project/:projectid/filters" element={<Filters/>} />
             <Route path="/myissues" element={<MyIssues />} />
             <Route path="/profile" element={<Profile />} />

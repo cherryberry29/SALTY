@@ -1,0 +1,156 @@
+/* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    /* background-color: #f0f2f5; */
+    color: #333;
+    margin: 0;
+    padding: 0;
+  }
+  
+  h1 {
+    margin: 0;
+    font-size: 24px;
+  }
+  .createClass{
+    position:relative;
+    left:600px;
+  }
+  .firstDiv{
+    display:flex;
+    flex-direction: row;
+  }
+  .toggleBacklogsList {
+    background:None;
+    color:#333;
+    margin-bottom: 20px;
+    margin-right: 5px;
+    transition: background-color 0.3s ease; 
+  }
+  
+  .toggleBacklogsList:hover {
+    background-color: #edd7e0; 
+  }
+  button {
+    background-color: #a8406a;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+  }
+  
+  button:hover {
+    background-color: #a8406a;
+  }
+  .createSprint{
+    position:relative;
+    left:800px;
+  }
+  
+  /* Main Container Styles */
+  .mainContainer {
+    max-width: 1000px;
+    margin: 20px auto;
+    padding: 20px;
+   
+   
+  }
+  
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .create-button {
+    background-color: #007bff;
+  }
+  
+  .create-button:hover {
+    background-color: #0056b3;
+  }
+  
+  .modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .modal-content {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    position: relative;
+  }
+  
+  .close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 20px;
+    cursor: pointer;
+  }
+  
+  .no-sprint-message {
+    text-align: center;
+    font-size: 18px;
+    color: #666;
+    margin: 20px 0;
+  }
+  
+  .sprints {
+    margin: 20px 0;
+  }
+  
+  .create-sprint-button {
+    display: block;
+    width: 100%;
+    background-color: #ff5722;
+    margin-top: 20px;
+  }
+  
+  .create-sprint-button:hover {
+    background-color: #e64a19;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .mainContainer {
+      padding: 15px;
+    }
+  
+    .header {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  
+    .create-button {
+      margin-top: 10px;
+      width: 100%;
+    }
+  }
+  
+  /* Styles specific to the mainContainer to prevent conflicts */
+  .mainContainer .header {
+    margin-bottom: 30px;
+  }
+  
+  .mainContainer .modal-content {
+    width: 80%;
+    max-width: 500px;
+  }
+  
+  .mainContainer .create-sprint-button {
+    margin-top: 30px;
+  }
+  

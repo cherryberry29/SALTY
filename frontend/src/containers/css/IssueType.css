@@ -1,42 +1,56 @@
-/* IssueType.css */
+body {
+  font-family: Arial, sans-serif;
+}
 
-.issue-type-dropdown {
-    display: flex;
-    flex-direction: row;
-  }
-  
-  select {
-    appearance: none;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    background-color: #fff;
-    color: #333;
-    padding: 8px 10px; /* Adjust padding as needed */
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 16px;
-    cursor: pointer;
-    outline: none;
-    width: 95%; /* Set width to 50% of the container */
-  }
-  
-  select:hover {
-    border-color: #666;
-  }
-  
-  select:focus {
-    border-color: #333;
-  }
-  
-  .icon-container {
-    display: inline-block;
-    vertical-align: middle;
-    margin-left: 10px; /* Adjust as needed */
-  }
-  
-  .icon-container img {
-    width: 24px; /* Adjust icon size as needed */
-    height: 24px; /* Adjust icon size as needed */
-    margin-right: 5px; /* Adjust spacing between icons as needed */
-  }
- 
+.container {
+  width: 200px;
+  text-align: center;
+  position: relative;
+}
+
+.toggle-div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  overflow:visible;
+}
+
+.small-image {
+  width: 15px;
+  height: 15px;
+  margin-right: 5px;
+}
+
+.arrow {
+  font-size: 15px;
+}
+
+.options-div {
+  margin-top: 10px;
+  position: absolute;
+  top: 100%; /* Position below the toggle-div */
+  left: 0; /* Align to the left edge */
+  z-index: 1000; /* Ensure it's above other elements */
+  display: block;
+  background-color: white;
+  border: 1px solid #ccc;
+  width: 100%;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+
+}
+
+.option {
+  display: flex;
+  align-items: center;
+  padding: 10px; /* Add padding for better spacing */
+  cursor: pointer; /* Change cursor to pointer */
+}
+
+.option:hover {
+  background-color: #f0f0f0; /* Highlight on hover */
+}
+
+.option img {
+  margin-right: 5px;
+}

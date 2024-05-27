@@ -12,3 +12,7 @@ class IssueSerializer(serializers.ModelSerializer):
     class Meta:
         model = issue
         fields = '__all__'
+class SprintSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Sprint
+        fields = ['sprint', 'start_date', 'end_date', 'sprint_goal', 'project','status']
